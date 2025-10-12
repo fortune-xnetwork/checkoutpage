@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Amor Registration</title>
+  <style>
+    :root {
+      --navy: #0b3d91;
+      --cyan: #00d4ff;
+      --white: #ffffff;
+      --text-dark: #0f172a;
+      --muted: #64748b;
+      --shadow: 0 10px 25px rgba(11, 61, 145, 0.15);
+      --radius: 18px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: var(--white);
+      color: var(--text-dark);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 30px 15px;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 22px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-top: 15px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    p.description {
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 5px;
+      margin-bottom: 25px;
+    }
+
+    .packages {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .package-card {
+      width: 100%;
+      background: #f9fbff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .package-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(11, 61, 145, 0.2);
+    }
+
+    .package-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--navy), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .package-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .package-name {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .package-price {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    /* Modal */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: 0 25px 80px rgba(11, 61, 145, 0.3);
+      width: 90%;
+      max-width: 400px;
+      padding: 25px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal h2 {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .modal p {
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .account-details {
+      background: #f3f8ff;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(11, 61, 145, 0.08);
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .modal button {
+      width: 100%;
+      background: linear-gradient(135deg, var(--navy), var(--cyan));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .modal button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(11, 61, 145, 0.2);
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 22px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">MA</div>
+  <h1>Mi Amor Registration</h1>
+  <p class="description">Choose your preferred package to continue registration.</p>
+
+  <div class="packages">
+    <!-- Package 1 -->
+    <div class="package-card" onclick="openModal('💎 MI AMOR PLUS', '₦10,000')">
+      <div class="package-image">
+        <img src="https://via.placeholder.com/120" alt="Mi Amor Plus Icon" />
+      </div>
+      <div class="package-name">💎 MI AMOR PLUS</div>
+      <div class="package-price">₦10,000</div>
+    </div>
+
+    <!-- Package 2 -->
+    <div class="package-card" onclick="openModal('💎 MI AMOR ULTRA', '₦14,000')">
+      <div class="package-image">
+        <img src="https://via.placeholder.com/120" alt="Mi Amor Ultra Icon" />
+      </div>
+      <div class="package-name">💎 MI AMOR ULTRA</div>
+      <div class="package-price">₦14,000</div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal" id="modal">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="selectedPackage">Package Name</h2>
+      <p>Please make payment using the details below to complete your registration.</p>
+
+      <div class="account-details">
+        <div class="detail-row"><span>Bank Name:</span><strong>GTBank</strong></div>
+        <div class="detail-row"><span>Account Name:</span><strong>Mi Amor Events</strong></div>
+        <div class="detail-row"><span>Account Number:</span><strong>0061234567</strong></div>
+        <div class="detail-row"><span>Amount:</span><strong id="selectedPrice">₦0</strong></div>
+      </div>
+
+      <button id="payButton">I HAVE MADE THE PAYMENT</button>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById("overlay");
+    const modal = document.getElementById("modal");
+    const selectedPackage = document.getElementById("selectedPackage");
+    const selectedPrice = document.getElementById("selectedPrice");
+    const payButton = document.getElementById("payButton");
+
+    function openModal(pkg, price) {
+      selectedPackage.textContent = pkg;
+      selectedPrice.textContent = price;
+      overlay.style.display = "flex";
+      const message = encodeURIComponent("hello coach, I have made my payment for mi amor registration");
+      payButton.onclick = () => {
+        window.location.href = `https://wa.me/2347035172111?text=${message}`;
+      };
+    }
+
+    function closeModal() {
+      overlay.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      if (event.target == overlay) {
+        closeModal();
+      }
+    };
+  </script>
+</body>
+</html>
