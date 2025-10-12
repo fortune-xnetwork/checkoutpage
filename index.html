@@ -1,623 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mi Amor Registration</title>
-
-  <!-- Poppins font (clean modern sans) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --navy:#001f4d;
-      --cyan:#00c2ff;
-      --accent-grad: linear-gradient(135deg,var(--navy),var(--cyan));
-      --text:#0a2540;
-      --muted:#6b7280;
-      --card:#f9f9fb;
-      --success:#00c851;
-      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0; min-height:100vh; background:#fff; color:var(--text);
-      display:flex; flex-direction:column; align-items:center; padding:28px;
-    }
-    h1{font-size:1.8rem; margin:18px 0 6px; text-align:center}
-    p.description{max-width:360px; text-align:center; color:var(--muted); margin:0 0 22px}
-
-    /* logo */
-    .logo-container{
-      width:110px; height:110px; border-radius:50%; background:var(--accent-grad);
-      display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:0 12px 30px rgba(0,31,77,0.08);
-    }
-    .logo-container img{width:88%; height:88%; border-radius:50%; object-fit:cover}
-
-    /* packages */
-    .packages{width:100%; max-width:420px; display:flex; flex-direction:column; gap:28px; margin-top:18px}
-    .package{
-      background:var(--card); border-radius:20px; padding:22px 18px;
-      display:flex; flex-direction:column; align-items:center; gap:12px;
-      cursor:pointer; transition:transform .22s ease, border-color .18s ease; border:2px solid transparent;
-    }
-    .package:hover{transform:translateY(-6px); border-color:rgba(0,194,255,0.14)}
-    .pkg-image{width:130px; height:130px; border-radius:18px; background:var(--accent-grad); overflow:hidden; display:flex; align-items:center; justify-content:center}
-    .pkg-image img{width:100%; height:100%; object-fit:cover; border-radius:18px}
-    .package h2{margin:0; font-size:1.15rem; font-weight:700; text-align:center}
-    .package p.price{margin:0; color:var(--navy); font-weight:700}
-    .btn-view{margin-top:8px; background:var(--accent-grad); color:#fff; border:none; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer}
-
-    /* overlays / modals */
-    .overlay{position:fixed; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter:blur(8px); background:rgba(255,255,255,0.6); z-index:40}
-    .modal{width:92%; max-width:420px; background:#fff; border-radius:16px; padding:20px; box-shadow:0 30px 70px rgba(3,12,34,0.12); position:relative; animation:popIn .34s cubic-bezier(.2,.9,.3,1)}
-    @keyframes popIn{from{transform:translateY(24px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
-    .modal h3{margin:0 0 6px; color:var(--navy)}
-    .modal p{margin:6px 0 12px; color:var(--muted)}
-
-    /* account row with copy */
-    .account{background:#f3fbff; border-radius:12px; padding:12px; text-align:left; color:var(--navy); font-weight:600; display:flex; align-items:center; gap:12px; justify-content:space-between}
-    .account .left{flex:1}
-    .account .right{display:flex; align-items:center; gap:8px}
-    .copy-btn{background:transparent;border:0;cursor:pointer;padding:6px;border-radius:8px;color:var(--navy);display:inline-flex;align-items:center;justify-content:center}
-    .copy-btn:active{transform:scale(.96)}
-    .tick{color:var(--success); font-size:18px; display:none; margin-left:6px; transform-origin:center; animation:tickIn .35s ease}
-    @keyframes tickIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
-
-    .helper{font-size:13px;color:var(--muted); margin-top:10px}
-
-    /* form */
-    .form-modal{max-width:480px}
-    form{display:flex; flex-direction:column; gap:10px; margin-top:8px}
-    .field{display:flex; flex-direction:column}
-    input[type="text"], input[type="email"], input[type="tel"], input[type="password"]{
-      padding:10px 12px; border-radius:10px; border:1px solid #d1d5db; font-size:14px; outline:none;
-    }
-    .field-row{position:relative}
-    .eye-btn{
-      position:absolute; right:8px; top:50%; transform:translateY(-50%); background:none; border:0; cursor:pointer;
-      width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; color:var(--muted);
-    }
-    .eye-btn:active{transform:translateY(-50%) scale(.96)}
-    .error{color:#ef4444; font-size:13px; margin-top:6px; text-align:left}
-
-    /* button + spinner inside */
-    .btn-full{width:100%; padding:12px; border-radius:12px; border:0; color:#fff; font-weight:800; font-size:15px; background:var(--accent-grad); cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px}
-    .btn-full.disabled{opacity:.6; pointer-events:none}
-    .spinner{width:16px; height:16px; border:2px solid rgba(255,255,255,.45); border-top:2px solid #fff; border-radius:50%; animation:spin .9s linear infinite; display:inline-block}
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    /* responsive */
-    @media(min-width:720px){ body{padding:48px} .packages{max-width:520px} .modal{max-width:520px} .form-modal{max-width:520px} }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Mi Amor Registration</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Poppins",sans-serif;background:#fff;color:#0a2540;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:20px
+}
+h1{margin-top:1rem;font-size:1.8rem}
+p.description{max-width:300px;margin:.5rem auto 2rem;color:#444}
+.logo-container{
+  width:100px;height:100px;border-radius:50%;overflow:hidden;
+  margin-top:30px;border:3px solid transparent;
+  background:linear-gradient(135deg,#001f4d,#00c2ff);
+  display:flex;align-items:center;justify-content:center
+}
+.logo-container img{width:90%;height:90%;border-radius:50%;object-fit:cover}
+.packages{
+  width:90%;max-width:400px;display:flex;flex-direction:column;gap:2rem;margin-bottom:4rem
+}
+.package{
+  background:#f9f9f9;border-radius:24px;padding:1.5rem 1rem;
+  transition:transform .3s ease;cursor:pointer;border:2px solid transparent
+}
+.package:hover{transform:scale(1.03);border-color:rgba(0,194,255,.4)}
+.pkg-image{
+  width:120px;height:120px;margin:0 auto 1rem;border-radius:24px;
+  background:linear-gradient(135deg,#001f4d,#00c2ff);
+  display:flex;align-items:center;justify-content:center;overflow:hidden
+}
+.pkg-image img{width:100%;height:100%;object-fit:cover;border-radius:24px}
+.package h2{margin:.5rem 0 .3rem;font-size:1.3rem}
+.package p.price{margin:0 0 1rem;font-weight:600;color:#0079bf}
+.btn-view{
+  background:linear-gradient(135deg,#001f4d,#00c2ff);
+  border:none;color:#fff;padding:.6rem 1.2rem;border-radius:10px;font-size:.9rem;transition:transform .2s ease
+}
+.btn-view:hover{transform:scale(1.05);cursor:pointer}
+/* modals */
+.modal-overlay,.form-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(255,255,255,.6);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;z-index:10
+}
+.modal,.form-modal{
+  background:#fff;border-radius:20px;padding:2rem 1.5rem;
+  max-width:350px;width:90%;box-shadow:0 4px 25px rgba(0,0,0,.1);
+  text-align:center;animation:slideIn .4s ease;position:relative
+}
+@keyframes slideIn{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal h3,.form-modal h3{margin-bottom:.5rem;color:#001f4d}
+.modal p,.form-modal p{font-size:.95rem;color:#333;margin:.3rem 0}
+.account{
+  margin:1rem 0;background:#f0f8ff;padding:.8rem;border-radius:12px;
+  font-weight:500;color:#001f4d;position:relative
+}
+.copy-btn{
+  position:absolute;right:10px;top:8px;background:none;border:none;cursor:pointer
+}
+.copy-btn svg{width:18px;height:18px;stroke:#0079bf}
+.copied-check{position:absolute;right:35px;top:8px;color:green;opacity:0;transition:.3s}
+.modal button,.form-modal button{
+  background:linear-gradient(135deg,#001f4d,#00c2ff);border:none;color:#fff;
+  padding:.7rem 1rem;border-radius:10px;font-size:.95rem;cursor:pointer;
+  transition:transform .2s ease;width:100%;display:flex;align-items:center;justify-content:center;gap:8px
+}
+.modal button:hover,.form-modal button:hover{transform:scale(1.05)}
+.close-btn{
+  background:none;border:none;color:#999;font-size:1.2rem;
+  position:absolute;top:15px;right:20px;cursor:pointer
+}
+form{display:flex;flex-direction:column;gap:.8rem;margin-top:1rem;text-align:left}
+label{font-size:.85rem;font-weight:500}
+input{
+  padding:.6rem;border-radius:10px;border:1px solid #ccc;font-size:.9rem;width:100%
+}
+.password-wrap{position:relative}
+.toggle-eye{
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer
+}
+.toggle-eye svg{width:18px;height:18px;stroke:#666}
+.error{color:red;font-size:.8rem;margin-top:-5px;margin-bottom:5px}
+.disabled{opacity:.7;pointer-events:none}
+.spinner{
+  width:16px;height:16px;border:2px solid rgba(255,255,255,.6);
+  border-top:2px solid #fff;border-radius:50%;animation:spin .8s linear infinite
+}
+@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+</style>
 </head>
 <body>
-  <!-- Logo (replace src with your /images/logo.png) -->
-  <div class="logo-container" aria-hidden="true">
-    <img src="images/logo.png" alt="Mi Amor Logo">
+<div class="logo-container"><img src="images/logo.png" alt="Mi Amor Logo"></div>
+<h1>Mi Amor Registration</h1>
+<p class="description">Choose your preferred package to complete your registration.</p>
+
+<div class="packages">
+  <div class="package" data-name="MI AMOR PLUS" data-price="₦10,000">
+    <div class="pkg-image"><img src="images/plus-package.jpg" alt=""></div>
+    <h2>💎 MI AMOR PLUS</h2><p class="price">₦10,000</p>
+    <button class="btn-view">VIEW DETAILS</button>
   </div>
-
-  <h1>Mi Amor Registration</h1>
-  <p class="description">Choose your preferred package to complete your registration.</p>
-
-  <!-- Packages list -->
-  <div class="packages" role="list" aria-label="Packages">
-    <div class="package" role="listitem" data-name="MI AMOR PLUS" data-price="₦10,000" tabindex="0">
-      <div class="pkg-image"><img src="images/plus-package.jpg" alt="Mi Amor Plus"></div>
-      <h2>💎 MI AMOR PLUS</h2>
-      <p class="price">₦10,000</p>
-      <button class="btn-view" aria-label="View details for MI AMOR PLUS">VIEW DETAILS</button>
-    </div>
-
-    <div class="package" role="listitem" data-name="MI AMOR ULTRA" data-price="₦14,000" tabindex="0">
-      <div class="pkg-image"><img src="images/ultra-package.jpg" alt="Mi Amor Ultra"></div>
-      <h2>💎 MI AMOR ULTRA</h2>
-      <p class="price">₦14,000</p>
-      <button class="btn-view" aria-label="View details for MI AMOR ULTRA">VIEW DETAILS</button>
-    </div>
+  <div class="package" data-name="MI AMOR ULTRA" data-price="₦14,000">
+    <div class="pkg-image"><img src="images/ultra-package.jpg" alt=""></div>
+    <h2>💎 MI AMOR ULTRA</h2><p class="price">₦14,000</p>
+    <button class="btn-view">VIEW DETAILS</button>
   </div>
+</div>
 
-  <!-- Payment Modal -->
-  <div class="overlay" id="paymentOverlay" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalPackageName">
-      <button class="close-btn" id="closePayment" aria-label="Close">×</button>
-      <h3 id="modalPackageName">Package Name</h3>
-      <p id="modalPackagePrice">₦0</p>
-      <p>Please make your payment to the account below:</p>
+<!-- payment modal -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('paymentModal')">✕</button>
+    <h3>Payment Details</h3>
+    <p>Make your payment using the account below:</p>
+    <div class="account">
+      Account Name: <strong>PXM - FAVOUR MEDIA</strong><br>
+      Bank: <strong>Moniepoint MFB</strong><br>
+      Account Number: <strong id="accountNumber">6354612255</strong>
+      <button class="copy-btn" onclick="copyAccount()">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16h8a2 2 0 002-2V6a2 2 0 00-2-2H8a2 2 0 00-2 2v8a2 2 0 002 2z"/><path stroke-linecap="round" stroke-linejoin="round" d="M16 8h2a2 2 0 012 2v8a2 2 0 01-2 2h-8a2 2 0 01-2-2v-2"/></svg>
+      </button>
+      <span class="copied-check" id="copiedCheck">✅</span>
+    </div>
+    <button onclick="openModal('formModal')">I HAVE MADE THE PAYMENT</button>
+  </div>
+</div>
 
-      <div class="account" aria-live="polite">
-        <div class="left">
-          Account Name: <strong id="acctName">PXM - FAVOUR MEDIA</strong><br>
-          Bank: <strong id="acctBank">Moniepoint MFB</strong><br>
-          Account Number: <strong id="accountNumber">6354612255</strong>
-        </div>
-        <div class="right">
-          <button class="copy-btn" id="copyBtn" title="Copy account number" aria-label="Copy account number">
-            <!-- clipboard SVG -->
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 9H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect x="9" y="3" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <span class="tick" id="copyTick">✔</span>
-        </div>
+<!-- form modal -->
+<div class="form-overlay" id="formModal">
+  <div class="form-modal">
+    <button class="close-btn" onclick="closeModal('formModal')">✕</button>
+    <h3>Register — Mi Amor</h3>
+    <p>Fill the form below & click “Submit”. You will be redirected to WhatsApp.</p>
+    <form id="checkoutForm">
+      <div><label>Full Name</label>
+        <input type="text" id="fullName"><div class="error" id="errName"></div></div>
+      <div><label>Email</label>
+        <input type="email" id="email"><div class="error" id="errEmail"></div></div>
+      <div><label>Phone Number</label>
+        <input type="tel" id="phone"><div class="error" id="errPhone"></div></div>
+      <div><label>Preferred Username</label>
+        <input type="text" id="username"><div class="error" id="errUser"></div></div>
+      <div class="password-wrap"><label>Password</label>
+        <input type="password" id="password">
+        <button type="button" class="toggle-eye" onclick="togglePass()">
+          <svg id="eyeIcon" fill="none" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+          </svg>
+        </button>
+        <div class="error" id="errPass"></div>
       </div>
-
-      <div class="center">
-        <p class="helper">After making the payment, tap the button below to submit your details.</p>
-        <button class="btn-full" id="paidBtn">I HAVE MADE THE PAYMENT</button>
-      </div>
-    </div>
+      <button type="submit" id="submitBtn">SUBMIT</button>
+    </form>
   </div>
+</div>
 
-  <!-- Checkout Form Modal -->
-  <div class="overlay" id="formOverlay" aria-hidden="true">
-    <div class="modal form-modal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
-      <button class="close-btn" id="closeForm" aria-label="Close">×</button>
-      <h3 id="formTitle">Register — Mi Amor</h3>
-      <p>Fill your details below then tap <strong>SUBMIT</strong>. You'll be redirected to WhatsApp with your details.</p>
-
-      <form id="userForm" novalidate>
-        <div class="field">
-          <input id="fullname" type="text" placeholder="Your full name" autocomplete="name" />
-          <div class="error" id="nameError"></div>
-        </div>
-
-        <div class="field">
-          <input id="email" type="email" placeholder="example@gmail.com" autocomplete="email" />
-          <div class="error" id="emailError"></div>
-        </div>
-
-        <div class="field">
-          <input id="phone" type="tel" placeholder="080********" autocomplete="tel" />
-          <div class="error" id="phoneError"></div>
-        </div>
-
-        <div class="field">
-          <input id="username" type="text" placeholder="Preferred Username" autocomplete="username" />
-          <div class="error" id="userError"></div>
-        </div>
-
-        <div class="field field-row">
-          <input id="password" type="password" placeholder="Password" autocomplete="new-password" />
-          <button type="button" class="eye-btn" id="togglePassword" aria-label="Toggle password visibility">
-            <!-- simple eye SVG (unfilled) -->
-            <svg id="eyeOpen" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <!-- eye closed (hidden by default) -->
-            <svg id="eyeClosed" width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17.94 17.94L6.06 6.06" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 12s4-7 10-7a9.9 9.9 0 0 1 6.94 2.94" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M21.94 12c-.21.36-1.29 2.02-3.19 3.63A9.9 9.9 0 0 1 12 19c-6 0-10-7-10-7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <div class="error" id="passError"></div>
-        </div>
-
-        <button type="submit" class="btn-full" id="submitBtn">SUBMIT</button>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    /* -------------------------
-       Elements & config
-    ------------------------- */
-    const packageCards = document.querySelectorAll('.package');
-    const viewBtns = document.querySelectorAll('.btn-view');
-    const paymentOverlay = document.getElementById('paymentOverlay');
-    const formOverlay = document.getElementById('formOverlay');
-    const closePayment = document.getElementById('closePayment');
-    const closeForm = document.getElementById('closeForm');
-    const modalPackageName = document.getElementById('modalPackageName');
-    const modalPackagePrice = document.getElementById('modalPackagePrice');
-    const acctNameEl = document.getElementById('acctName');
-    const acctBankEl = document.getElementById('acctBank');
-    const acctNumberEl = document.getElementById('accountNumber');
-    const copyBtn = document.getElementById('copyBtn');
-    const copyTick = document.getElementById('copyTick');
-    const paidBtn = document.getElementById('paidBtn');
-
-    // form
-    const userForm = document.getElementById('userForm');
-    const fullname = document.getElementById('fullname');
-    const email = document.getElementById('email');
-    const phone = document.getElementById('phone');
-    const username = document.getElementById('username');
-    const password = document.getElementById('password');
-    const nameError = document.getElementById('nameError');
-    const emailError = document.getElementById('emailError');
-    const phoneError = document.getElementById('phoneError');
-    const userError = document.getElementById('userError');
-    const passError = document.getElementById('passError');
-    const submitBtn = document.getElementById('submitBtn');
-
-    // toggle eye
-    const togglePasswordBtn = document.getElementById('togglePassword');
-    const eyeOpen = document.getElementById('eyeOpen');
-    const eyeClosed = document.getElementById('eyeClosed');
-
-    // Configuration (your values)
-    const whatsappNumber = "2347035172111"; // with country code
-    const ACCOUNT_NAME = "PXM - FAVOUR MEDIA";
-    const ACCOUNT_BANK = "Moniepoint MFB";
-    const ACCOUNT_NUMBER = "6354612255";
-
-    // initialize displayed account details (in case you change constants)
-    acctNameEl.textContent = ACCOUNT_NAME;
-    acctBankEl.textContent = ACCOUNT_BANK;
-    acctNumberEl.textContent = ACCOUNT_NUMBER;
-
-    /* -------------------------
-       Open payment modal
-    ------------------------- */
-    function openPayment(pkgName, pkgPrice){
-      modalPackageName.textContent = pkgName;
-      modalPackagePrice.textContent = pkgPrice;
-      paymentOverlay.style.display = 'flex';
-      paymentOverlay.setAttribute('aria-hidden','false');
-
-      // small click animation on the package if present
-      const card = [...packageCards].find(c => c.dataset.name === pkgName);
-      if(card) card.animate([{transform:'scale(1)'},{transform:'scale(.98)'},{transform:'scale(1)'}],{duration:260});
-    }
-
-    packageCards.forEach(card => {
-      card.addEventListener('click', () => openPayment(card.dataset.name, card.dataset.price));
-      card.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') openPayment(card.dataset.name, card.dataset.price); });
-    });
-    viewBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => { e.stopPropagation(); const p = btn.closest('.package'); openPayment(p.dataset.name, p.dataset.price); });
-    });
-
-    /* -------------------------
-       Close overlays
-    ------------------------- */
-    closePayment.addEventListener('click', ()=> { paymentOverlay.style.display='none'; paymentOverlay.setAttribute('aria-hidden','true'); });
-    closeForm.addEventListener('click', ()=> { formOverlay.style.display='none'; formOverlay.setAttribute('aria-hidden','true'); });
-
-    // click outside closes
-    [paymentOverlay, formOverlay].forEach(ov => {
-      ov.addEventListener('click', (e) => { if(e.target === ov){ ov.style.display='none'; ov.setAttribute('aria-hidden','true'); } });
-    });
-
-    // ESC closes
-    document.addEventListener('keydown', (e)=> { if(e.key === 'Escape'){ paymentOverlay.style.display='none'; formOverlay.style.display='none'; } });
-
-    /* -------------------------
-       Copy account number with tick animation
-    ------------------------- */
-    async function copyAccount(){
-      const value = acctNumberEl.textContent.trim();
-      try{
-        await navigator.clipboard.writeText(value);
-        copyTick.style.display = 'inline';
-        // quick scale animation
-        copyTick.animate([{transform:'scale(.7)'},{transform:'scale(1.05)'},{transform:'scale(1)'}],{duration:300});
-        setTimeout(()=> copyTick.style.display = 'none', 1600);
-      }catch(err){
-        alert('Unable to copy. Please copy manually: ' + value);
-      }
-    }
-    copyBtn.addEventListener('click', copyAccount);
-    copyBtn.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') copyAccount(); });
-
-    /* -------------------------
-       Paid button -> open form modal
-    ------------------------- */
-    paidBtn.addEventListener('click', () => {
-      paymentOverlay.style.display = 'none';
-      paymentOverlay.setAttribute('aria-hidden','true');
-      clearErrors();
-      formOverlay.style.display = 'flex';
-      formOverlay.setAttribute('aria-hidden','false');
-      setTimeout(()=> fullname.focus(), 180);
-    });
-
-    /* -------------------------
-       Password visibility toggle (SVG swap)
-    ------------------------- */
-    togglePasswordBtn.addEventListener('click', () => {
-      const isHidden = password.getAttribute('type') === 'password';
-      password.setAttribute('type', isHidden ? 'text' : 'password');
-      eyeOpen.style.display = isHidden ? 'none' : 'inline';
-      eyeClosed.style.display = isHidden ? 'inline' : 'none';
-      togglePasswordBtn.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
-    });
-
-    /* -------------------------
-       Validation helpers
-    ------------------------- */
-    function clearErrors(){
-      nameError.textContent = '';
-      emailError.textContent = '';
-      phoneError.textContent = '';
-      userError.textContent = '';
-      passError.textContent = '';
-    }
-
-    function validateForm(){
-      let ok = true;
-      clearErrors();
-      if(fullname.value.trim() === ''){ nameError.textContent = 'Please enter your full name.'; ok = false; }
-      if(email.value.trim() === ''){ emailError.textContent = 'Please enter your email.'; ok = false; }
-      if(phone.value.trim() === ''){ phoneError.textContent = 'Please enter your phone number.'; ok = false; }
-      if(username.value.trim() === ''){ userError.textContent = 'Please enter your preferred username.'; ok = false; }
-      if(password.value.trim() === ''){ passError.textContent = 'Please enter a password.'; ok = false; }
-      return ok;
-    }
-
-    /* -------------------------
-       Build WhatsApp message and submit
-    ------------------------- */
-    function buildMessage(){
-      const lines = [
-        "Hello Coach,",
-        "",
-        "*I have made my payment & want to submit my details for registration:*",
-        "",
-        `⭕ Full name: ${fullname.value.trim()}`,
-        `⭕ Phone number: ${phone.value.trim()}`,
-        `⭕ Email: ${email.value.trim()}`,
-        `⭕ Preferred Username: ${username.value.trim()}`,
-        `⭕ Password: ${password.value.trim()}`
-      ];
-      return encodeURIComponent(lines.join('\n'));
-    }
-
-    userForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if(!validateForm()) return;
-
-      // show spinner inside button
-      submitBtn.classList.add('disabled');
-      submitBtn.innerHTML = 'PLEASE WAIT <span class="spinner" aria-hidden="true"></span>';
-
-      // 4-second delay then redirect
-      setTimeout(()=>{
-        const msg = buildMessage();
-        const link = `https://wa.me/${whatsappNumber}?text=${msg}`;
-        window.location.href = link;
-      }, 4000);
-    });
-  </script>
-</body>
-      </html>      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 700;
-      font-size: 22px;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-      margin-top: 15px;
-      font-size: 24px;
-      text-align: center;
-    }
-
-    p.description {
-      text-align: center;
-      font-size: 14px;
-      color: var(--muted);
-      margin-top: 5px;
-      margin-bottom: 25px;
-    }
-
-    .packages {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 25px;
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .package-card {
-      width: 100%;
-      background: #f9fbff;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      border: 1px solid rgba(0, 0, 0, 0.03);
-    }
-
-    .package-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 15px 35px rgba(11, 61, 145, 0.2);
-    }
-
-    .package-image {
-      width: 120px;
-      height: 120px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, var(--navy), var(--cyan));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      margin-bottom: 15px;
-    }
-
-    .package-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 20px;
-    }
-
-    .package-name {
-      font-weight: 700;
-      font-size: 16px;
-      margin-bottom: 5px;
-    }
-
-    .package-price {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--navy);
-    }
-
-    /* Modal */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(8px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-    }
-
-    .modal {
-      background: white;
-      border-radius: var(--radius);
-      box-shadow: 0 25px 80px rgba(11, 61, 145, 0.3);
-      width: 90%;
-      max-width: 400px;
-      padding: 25px;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { transform: scale(0.95); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .modal h2 {
-      text-align: center;
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .modal p {
-      text-align: center;
-      font-size: 14px;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-
-    .account-details {
-      background: #f3f8ff;
-      border-radius: 15px;
-      padding: 15px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(11, 61, 145, 0.08);
-    }
-
-    .detail-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    .modal button {
-      width: 100%;
-      background: linear-gradient(135deg, var(--navy), var(--cyan));
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 12px;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .modal button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 18px rgba(11, 61, 145, 0.2);
-    }
-
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 25px;
-      font-size: 22px;
-      color: var(--muted);
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-  <div class="logo">MA</div>
-  <h1>MI AMOR ENROLLMENT</h1>
-  <p class="description">Choose your preferred package to continue registration.</p>
-
-  <div class="packages">
-    <!-- Package 1 -->
-    <div class="package-card" onclick="openModal('💎 MI AMOR PLUS', '₦10,000')">
-      <div class="package-image">
-        <img src="plus package.jpg" alt="Mi Amor Plus Icon" />
-      </div>
-      <div class="package-name">💎 MI AMOR PLUS</div>
-      <div class="package-price">₦10,000</div>
-    </div>
-
-    <!-- Package 2 -->
-    <div class="package-card" onclick="openModal('💎 MI AMOR ULTRA', '₦14,000')">
-      <div class="package-image">
-        <img src="ultra package.jpg" alt="Mi Amor Ultra Icon" />
-      </div>
-      <div class="package-name">💎 MI AMOR ULTRA</div>
-      <div class="package-price">₦14,000</div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div class="overlay" id="overlay">
-    <div class="modal" id="modal">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <h2 id="selectedPackage">Package Name</h2>
-      <p>Please make payment using the details below to complete your registration.</p>
-
-      <div class="account-details">
-        <div class="detail-row"><span>Bank Name:</span><strong>GTBank</strong></div>
-        <div class="detail-row"><span>Account Name:</span><strong>Mi Amor Events</strong></div>
-        <div class="detail-row"><span>Account Number:</span><strong>0061234567</strong></div>
-        <div class="detail-row"><span>Amount:</span><strong id="selectedPrice">₦0</strong></div>
-      </div>
-
-      <button id="payButton">I HAVE MADE THE PAYMENT</button>
-    </div>
-  </div>
-
-  <script>
-    const overlay = document.getElementById("overlay");
-    const modal = document.getElementById("modal");
-    const selectedPackage = document.getElementById("selectedPackage");
-    const selectedPrice = document.getElementById("selectedPrice");
-    const payButton = document.getElementById("payButton");
-
-    function openModal(pkg, price) {
-      selectedPackage.textContent = pkg;
-      selectedPrice.textContent = price;
-      overlay.style.display = "flex";
-      const message = encodeURIComponent("hello coach, I have made my payment for mi amor registration");
-      payButton.onclick = () => {
-        window.location.href = `https://wa.me/2347035172111?text=${message}`;
-      };
-    }
-
-    function closeModal() {
-      overlay.style.display = "none";
-    }
-
-    window.onclick = function(event) {
-      if (event.target == overlay) {
-        closeModal();
-      }
-    };
-  </script>
+<script>
+const whatsappNumber="2347035172111";
+let selectedPackage="";
+document.querySelectorAll(".btn-view").forEach(btn=>{
+  btn.onclick=e=>{
+    selectedPackage=e.target.closest(".package").dataset.name;
+    document.getElementById("paymentModal").style.display="flex";
+  };
+});
+function openModal(id){document.getElementById(id).style.display="flex";}
+function closeModal(id){document.getElementById(id).style.display="none";}
+function copyAccount(){
+  const acc=document.getElementById("accountNumber").innerText;
+  navigator.clipboard.writeText(acc);
+  const tick=document.getElementById("copiedCheck");
+  tick.style.opacity=1;
+  setTimeout(()=>tick.style.opacity=0,1200);
+}
+function togglePass(){
+  const pass=document.getElementById("password");
+  const icon=document.getElementById("eyeIcon");
+  if(pass.type==="password"){
+    pass.type="text";
+    icon.innerHTML='<path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7A10.05 10.05 0 016.11 6.11m12.02 12.02L19.5 21"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>';
+  }else{
+    pass.type="password";
+    icon.innerHTML='<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>';
+  }
+}
+const form=document.getElementById("checkoutForm");
+form.addEventListener("submit",e=>{
+  e.preventDefault();
+  const fields={
+    fullName:form.fullName?.value||document.getElementById("fullName").value.trim(),
+    email:document.getElementById("email").value.trim(),
+    phone:document.getElementById("phone").value.trim(),
+    username:document.getElementById("username").value.trim(),
+    password:document.getElementById("password").value.trim()
+  };
+  let valid=true;
+  for(const [id,val] of Object.entries(fields)){
+    const err=document.getElementById("err"+id.charAt(0).toUpperCase()+id.slice(1));
+    if(!val){err.textContent="This field is required";valid=false;}
+    else err.textContent="";
+  }
+  if(!valid)return;
+  const btn=document.getElementById("submitBtn");
+  btn.innerHTML='<div class="spinner"></div> PLEASE WAIT...';
+  btn.classList.add("disabled");
+  setTimeout(()=>{
+    const msg=`Hello Coach,%0A%0A*I have made my payment & want to submit my details for registration:*%0A%0A⭕ Full name: ${fields.fullName}%0A⭕ Phone number: ${fields.phone}%0A⭕ Email: ${fields.email}%0A⭕ Preferred Username: ${fields.username}%0A⭕ Password: ${fields.password}%0A%0ASelected Package: ${selectedPackage}`;
+    const link=`https://wa.me/${whatsappNumber}?text=${msg}`;
+    window.location.href=link;
+  },4000);
+});
+</script>
 </body>
 </html>
