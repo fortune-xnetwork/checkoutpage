@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi Amor — Checkout</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --navy:#021730; /* deep navy */
+      --cyan:#006a8f; /* deeper cyan */
+      --accent: linear-gradient(135deg,var(--navy),var(--cyan));
+      --bg:#ffffff;
+      --muted:#6b7280;
+      --card:#f6fbff;
+      --success:#00c851;
+      --radius:18px;
+      --shadow:0 22px 50px rgba(2,23,48,0.12);
+      --text:#07192e;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:'Poppins',system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
+      display:flex; flex-direction:column; align-items:center; padding:28px;
+    }
+    h1,h2,h3{font-family:"Times New Roman", Times, serif;margin:0}
+
+    /* header / logo */
+    .logo-wrap{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:18px;
+      background:linear-gradient(180deg,#fff,rgba(255,255,255,0.6)); padding:6px; box-shadow:0 8px 24px rgba(2,23,48,0.08)}
+      background:conic-gradient(from 180deg at 50% 50%, var(--navy), var(--cyan)); padding:4px}
+    .logo-inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
+    .logo-inner img{width:84%;height:84%;border-radius:50%;object-fit:cover;display:block}
+
+    /* title */
+    .title{margin-top:12px;font-size:28px;font-weight:700}
+    .subtitle{color:var(--muted);max-width:780px;margin:8px 0 22px;font-size:15px;text-align:center}
+
+    /* packages container */
+    .packages{width:100%;max-width:820px;display:flex;flex-direction:column;gap:30px;margin-top:10px;align-items:center}
+    .package{width:92%;max-width:540px;background:linear-gradient(180deg, #fff, #fbfdff);border-radius:28px;padding:22px;
+      display:flex;flex-direction:column;align-items:center;gap:14px;border:1px solid rgba(3,15,40,0.04);transition:transform .16s ease,box-shadow .16s}
+    .package:hover{transform:translateY(-6px);box-shadow:0 18px 48px rgba(2,23,48,0.08)}
+
+    .pkg-image{width:100%;max-height:230px;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,var(--navy),var(--cyan));display:flex;align-items:center;justify-content:center}
+    .pkg-image img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .pkg-name{font-size:26px;font-weight:800;margin-top:6px}
+    .pkg-price{font-size:22px;color:var(--navy);font-weight:700;margin-bottom:6px}
+
+    .view-btn{background:var(--accent);color:#fff;border:0;padding:12px 26px;border-radius:12px;font-weight:800;font-size:16px;cursor:pointer;
+      transition:transform .14s ease}
+    .view-btn:active{transform:scale(.98)}
+
+    /* footer */
+    footer{margin-top:28px;color:#98a3b2;font-size:13px;opacity:.9}
+
+    /* overlays/modals */
+    .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.48);backdrop-filter:blur(8px);z-index:60}
+    .modal{width:92%;max-width:540px;background:#fff;border-radius:20px;padding:22px;box-shadow:var(--shadow);position:relative}
+    .modal h3{font-size:20px;margin-bottom:6px}
+    .modal p{color:var(--muted);margin:0 0 12px}
+
+    .close-btn{position:absolute;right:14px;top:14px;background:none;border:0;font-size:20px;color:var(--muted);cursor:pointer}
+
+    /* Payment card - styled modern */
+    .payment-card{
+      margin-top:8px;border-radius:14px;padding:18px;background:linear-gradient(180deg, rgba(0,126,168,0.03), rgba(2,23,48,0.02));
+      display:flex;flex-direction:column;gap:12px;border:1px solid rgba(3,15,40,0.04)
+    }
+    .payment-top{display:flex;align-items:center;gap:12px}
+    
+    .bank-details{flex:1;text-align:left}
+    .bank-details .label{font-size:13px;color:var(--muted);margin-bottom:6px;font-weight:600}
+    .bank-details .acct-name{font-weight:800;font-size:16px;color:var(--text);margin-bottom:4px}
+
+    /* row style for account number and copy */
+    .acct-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px;border-radius:10px;background:#fff;margin-top:6px;border:1px solid rgba(3,15,40,0.03)}
+    .acct-left{display:flex;flex-direction:column;gap:6px;flex:1;text-align:left}
+    .acct-number{font-weight:800;font-size:18px;color:var(--navy);letter-spacing:0.6px}
+    .acct-meta{font-size:13px;color:var(--muted)}
+
+    /* copy morph container */
+    .copy-morph{width:44px;height:44px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#fff,#fbfeff);border:1px solid rgba(3,15,40,0.04);cursor:pointer;position:relative;overflow:hidden}
+    .copy-morph svg{width:20px;height:20px;position:absolute;transition:opacity .2s ease, transform .25s ease}
+    .copy-morph .copy-icon{opacity:1;transform:scale(1)}
+    .copy-morph.copy-active .copy-icon{opacity:0;transform:scale(.6)}
+    .copy-morph .tick-icon{opacity:0;transform:scale(.6) rotate(-10deg)}
+    .copy-morph.copy-active .tick-icon{opacity:1;transform:scale(1) rotate(0deg)}
+
+    /* helper text */
+    .helper{font-size:13px;color:var(--muted);margin-top:8px;text-align:left}
+
+    /* form modal styles */
+    .form-content{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+    .field{display:flex;flex-direction:column;gap:6px;text-align:left}
+    label{font-size:13px;color:#263a56;font-weight:700}
+    input[type="text"],input[type="email"],input[type="tel"],input[type="password"]{padding:10px;border-radius:10px;border:1px solid #dbe6ef;font-size:14px}
+    .err{color:#d44; font-size:13px; min-height:18px}
+
+    /* password eye */
+    .pw-wrap{position:relative}
+    .eye-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent;cursor:pointer;padding:6px}
+
+    /* submit */
+    .submit-btn{margin-top:6px;padding:12px;border-radius:12px;border:0;background:var(--accent);color:#fff;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px}
+    .submit-btn.disabled{opacity:.6;pointer-events:none}
+    .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.45);border-top:2px solid #fff;border-radius:50%;animation:spin .9s linear infinite}
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    @media(min-width:960px){
+      .packages{flex-direction:row;gap:28px;justify-content:center;align-items:flex-start}
+      .package{max-width:320px}
+      .pkg-image{max-height:200px}
+    }
+.view-btn, .submit-btn, #paidBtn {
+  transition: transform 0.2s ease-in-out;
+}
+
+.view-btn:hover, .submit-btn:hover, #paidBtn:hover {
+  transform: scale(1.05);
+}
+
+.view-btn:active, .submit-btn:active, #paidBtn:active {
+  transform: scale(0.95);
+}
+
+  </style>
+</head>
+<body>
+  <div class="logo-wrap" aria-hidden="true">
+    <div class="logo-ring">
+      <div class="logo-inner">
+        <!-- replace /images/logo.png -->
+        <img src="logo.jpg" alt="logo">
+      </div>
+    </div>
+  </div>
+
+  <h1 class="title">MI AMOR ENROLLMENT</h1>
+  <div class="subtitle">Choose a package and follow the steps to complete your registration. Tap any package or the button to view payment information.</div>
+
+  <div class="packages" role="list" aria-label="Packages">
+    <div class="package" role="listitem" data-name="MI AMOR PLUS" data-price="₦10,000">
+      <div class="pkg-image"><img src="plus package.jpg" alt="Mi Amor Plus"></div>
+      <div class="pkg-name">💎 MI AMOR PLUS</div>
+      <div class="pkg-price">₦10,000</div>
+      <button class="view-btn" aria-label="View details for MI AMOR PLUS">VIEW DETAILS</button>
+    </div>
+
+    <div class="package" role="listitem" data-name="MI AMOR ULTRA" data-price="₦14,000">
+      <div class="pkg-image"><img src="ultra package.jpg" alt="Mi Amor Ultra"></div>
+      <div class="pkg-name">💎 MI AMOR ULTRA</div>
+      <div class="pkg-price">₦14,000</div>
+      <button class="view-btn" aria-label="View details for MI AMOR ULTRA">VIEW DETAILS</button>
+    </div>
+  </div>
+
+  <footer>miamor2025. All rights reserved</footer>
+
+  <!-- PAYMENT OVERLAY -->
+  <div class="overlay" id="paymentOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
+      <button class="close-btn" id="closePayment" aria-label="Close">✕</button>
+      <h3 id="paymentTitle">PAYMENT DETAILS</h3>
+      <p id="paymentSubtitle" class="helper">Make the payment to the account below, then tap "I HAVE MADE THE PAYMENT" to continue.</p>
+
+      <div class="payment-card" aria-live="polite">
+  <div class="payment-top">
+    <div class="bank-logo">
+      <img src="Bank logo.png" alt="Bank Logo" style="width: 20px; height: 20px;">
+    </div>
+    <div class="bank-details">
+      <div class="label">Beneficiary</div>
+      <div class="acct-name" id="acctName">PXM - FAVOUR MEDIA</div>
+      <div class="acct-meta" id="acctBank">Moniepoint MFB</div>
+    </div>
+  </div>
+
+        <div class="acct-row">
+          <div class="acct-left">
+            <div class="acct-number" id="acctNumber">6354612255</div>
+            <div class="acct-meta">Account number</div>
+          </div>
+
+          <div>
+            <div id="copyMorph" class="copy-morph" tabindex="0" role="button" aria-label="Copy account number">
+              <!-- copy SVG -->
+              <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+                <rect x="9" y="2" width="10" height="4" rx="1"></rect>
+                <path d="M9 6H7a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2"></path>
+              </svg>
+              <!-- tick SVG (hidden until active) -->
+              <svg class="tick-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--success)">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="helper" style="margin-top:12px">After payment, click the button below to proceed.</p>
+      <div style="margin-top:8px">
+        <button id="paidBtn" class="submit-btn">I HAVE MADE THE PAYMENT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM OVERLAY -->
+  <div class="overlay" id="formOverlay" aria-hidden="true">
+    <div class="modal form-modal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+      <button class="close-btn" id="closeForm" aria-label="Close">✕</button>
+      <h3 id="formTitle">REGISTER — MI AMOR</h3>
+      <p class="helper">Fill your details below and submit. You will be redirected to complete your registration & get added to the mentorship group.</p>
+
+      <div class="form-content">
+        <div class="field"><label for="fullName">Full Name</label><input id="fullName" type="text" class="input"><div class="err" id="errFullName"></div></div>
+        <div class="field"><label for="email">Email</label><input id="email" type="email" class="input"><div class="err" id="errEmail"></div></div>
+        <div class="field"><label for="phone">Phone Number</label><input id="phone" type="tel" class="input"><div class="err" id="errPhone"></div></div>
+        <div class="field"><label for="username">Preferred Username</label><input id="username" type="text" class="input"><div class="err" id="errUsername"></div></div>
+
+        <div class="field pw-wrap"><label for="password">Password</label>
+          <div style="position:relative">
+            <input id="password" type="password" class="input">
+            <button type="button" class="eye-btn" id="toggleEye" aria-label="Toggle password visibility">
+              <!-- eye open -->
+              <svg id="eyeOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+                <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <!-- eye closed (hidden initially) -->
+              <svg id="eyeClosed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" style="display:none">
+                <path d="M17.94 17.94L6.06 6.06"></path>
+                <path d="M2 12s4-7 10-7 10 7 10 7-1.5 2.6-4.76 4.4"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="err" id="errPassword"></div>
+        </div>
+
+        <div>
+          <button id="submitBtn" class="submit-btn">SUBMIT</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+// Config
+const WHATSAPP = "2347035172111"; // include country code
+const ACCOUNT = "6354612255";
+const ACCT_NAME = "PXM - FAVOUR MEDIA";
+const ACCT_BANK = "Moniepoint MFB";
+
+// Elements
+const packages = document.querySelectorAll('.package');
+const paymentOverlay = document.getElementById('paymentOverlay');
+const formOverlay = document.getElementById('formOverlay');
+const closePayment = document.getElementById('closePayment');
+const closeForm = document.getElementById('closeForm');
+const acctNumberEl = document.getElementById('acctNumber');
+const acctNameEl = document.getElementById('acctName');
+const acctBankEl = document.getElementById('acctBank');
+const copyMorph = document.getElementById('copyMorph');
+const paidBtn = document.getElementById('paidBtn');
+
+const fullName = document.getElementById('fullName');
+const email = document.getElementById('email');
+const phone = document.getElementById('phone');
+const username = document.getElementById('username');
+const password = document.getElementById('password');
+const errFullName = document.getElementById('errFullName');
+const errEmail = document.getElementById('errEmail');
+const errPhone = document.getElementById('errPhone');
+const errUsername = document.getElementById('errUsername');
+const errPassword = document.getElementById('errPassword');
+const submitBtn = document.getElementById('submitBtn');
+
+// initialize account values
+acctNumberEl.textContent = ACCOUNT;
+acctNameEl.textContent = ACCT_NAME;
+acctBankEl.textContent = ACCT_BANK;
+
+let activePackage = {name:'', price:''};
+let copyTimeout = null;
+
+// open package modal
+packages.forEach(p => {
+  p.addEventListener('click', ()=> openPayment(p.dataset.name, p.dataset.price));
+  p.addEventListener('keydown', e => { if(e.key==='Enter' || e.key===' ') openPayment(p.dataset.name, p.dataset.price); });
+  const btn = p.querySelector('.view-btn');
+  btn.addEventListener('click', e => { e.stopPropagation(); openPayment(p.dataset.name, p.dataset.price); });
+});
+
+function openPayment(name, price){
+  activePackage.name = name; activePackage.price = price;
+  document.getElementById('paymentTitle').textContent = 'Payment Details';
+  document.getElementById('paymentSubtitle').textContent = `Make payment of ${price} to the account below, then tap "I HAVE MADE THE PAYMENT".`;
+  paymentOverlay.style.display = 'flex';
+  paymentOverlay.setAttribute('aria-hidden','false');
+}
+
+// close handlers
+document.getElementById('closePayment').addEventListener('click', ()=> { paymentOverlay.style.display='none'; paymentOverlay.setAttribute('aria-hidden','true'); });
+document.getElementById('closeForm').addEventListener('click', ()=> { formOverlay.style.display='none'; formOverlay.setAttribute('aria-hidden','true'); });
+
+paymentOverlay.addEventListener('click', e => { if(e.target===paymentOverlay){ paymentOverlay.style.display='none'; paymentOverlay.setAttribute('aria-hidden','true'); } });
+formOverlay.addEventListener('click', e => { if(e.target===formOverlay){ formOverlay.style.display='none'; formOverlay.setAttribute('aria-hidden','true'); } });
+
+// copy morph animation: copy -> tick -> revert after 5s
+copyMorph.addEventListener('click', async () => {
+  try{
+    await navigator.clipboard.writeText(ACCOUNT);
+  }catch(e){
+    const ta = document.createElement('textarea');
+    ta.value = ACCOUNT; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+  }
+  copyMorph.classList.add('copy-active');
+  if(copyTimeout) clearTimeout(copyTimeout);
+  copyTimeout = setTimeout(()=> { copyMorph.classList.remove('copy-active'); }, 5000);
+});
+copyMorph.addEventListener('keydown',(e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); copyMorph.click(); } });
+
+// paid -> open form modal
+// paid -> open form modal
+paidBtn.addEventListener('click', ()=> {
+  paidBtn.innerHTML = 'PLEASE WAIT <span class="spinner" aria-hidden="true"></span>';
+  paidBtn.classList.add('disabled');
+  setTimeout(()=> {
+    paymentOverlay.style.display='none';
+    paymentOverlay.setAttribute('aria-hidden','true');
+    // reset form
+    clearErrors();
+    fullName.value='';
+    email.value='';
+    phone.value='';
+    username.value='';
+    password.value='';
+    formOverlay.style.display='flex';
+    formOverlay.setAttribute('aria-hidden','false');
+    paidBtn.innerHTML = 'I HAVE MADE THE PAYMENT';
+    paidBtn.classList.remove('disabled');
+    setTimeout(()=> fullName.focus(),200);
+  }, 10000); // 10-second delay
+});
+
+// toggle eye
+const toggleEye = document.getElementById('toggleEye');
+const eyeOpen = document.getElementById('eyeOpen');
+const eyeClosed = document.getElementById('eyeClosed');
+toggleEye.addEventListener('click', ()=>{
+  const hidden = password.getAttribute('type')==='password';
+  password.setAttribute('type', hidden ? 'text' : 'password');
+  eyeOpen.style.display = hidden ? 'none' : 'block';
+  eyeClosed.style.display = hidden ? 'block' : 'none';
+  toggleEye.setAttribute('aria-pressed', String(hidden));
+});
+
+// validation
+function clearErrors(){
+  errFullName.textContent=''; errEmail.textContent=''; errPhone.textContent=''; errUsername.textContent=''; errPassword.textContent='';
+}
+function validate(){
+  let ok=true; clearErrors();
+  if(fullName.value.trim()===''){ errFullName.textContent='Please enter your full name.'; ok=false; }
+  if(email.value.trim()===''){ errEmail.textContent='Please enter your email.'; ok=false; }
+  if(phone.value.trim()===''){ errPhone.textContent='Please enter your phone number.'; ok=false; }
+  if(username.value.trim()===''){ errUsername.textContent='Please enter your preferred username.'; ok=false; }
+  if(password.value.trim()===''){ errPassword.textContent='Please enter a password.'; ok=false; }
+  return ok;
+}
+
+// submit
+submitBtn.addEventListener('click', (e)=> {
+  e.preventDefault();
+  if(!validate()) return;
+  submitBtn.classList.add('disabled');
+  submitBtn.innerHTML = 'PLEASE WAIT <span class="spinner" aria-hidden="true"></span>';
+  setTimeout(()=> {
+    const lines = [ 
+      "Hello Coach,",
+      "",
+      "*I have made my payment & want to submit my details for registration:*",
+      "",
+      `⭕ Full name: ${fullName.value.trim()}`,
+      `⭕ Phone number: ${phone.value.trim()}`,
+      `⭕ Email: ${email.value.trim()}`,
+      `⭕ Preferred Username: ${username.value.trim()}`,
+      `⭕ Password: ${password.value.trim()}`,
+      "",
+      `Selected Package: ${activePackage.name} (${activePackage.price})`
+    ];
+    const msg = encodeURIComponent(lines.join('\n'));
+    window.location.href = `https://wa.me/${WHATSAPP}?text=${msg}`;
+  }, 5000); // 5-second delay
+});
+
+// accessibility: ESC to close
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ if(paymentOverlay.style.display==='flex'){ paymentOverlay.style.display='none'; paymentOverlay.setAttribute('aria-hidden','true'); } if(formOverlay.style.display==='flex'){ formOverlay.style.display='none'; formOverlay.setAttribute('aria-hidden','true'); } } });
+
+</script>
+</body>
+</html>
