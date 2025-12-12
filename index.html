@@ -359,22 +359,22 @@
 
   .modal .register{
     display: block !important;
-    margin: 10px auto 0 auto !important;   /* keeps it centered */
+    margin: 10px auto 0 auto !important;
+    transform: translateX(20px); /* your right shift */
     
-    /* SHIFT BUTTON TO THE RIGHT */
-    transform: translateX(20px);           /* adjust 20px → 25px → 30px if needed */
+    padding: 12px 30px !important;
+    width: 170px !important;
+    min-width: 0 !important;
 
-    /* GENERAL SIZE INCREASE */
-    padding: 16px 28px !important;         /* bigger button box */
-    width: 170px !important;               /* wider button */
-    min-width: 0 !important;               /* unlocks width from .btn */
-    font-size: 24px !important;            /* bigger text */
-
-    /* STYLE */
-    text-align: center !important;
-    border-radius: 14px !important;
+    font-size: 20px !important;
     font-family: "Times New Roman", Times, serif;
-   }
+    border-radius: 14px !important;
+
+    /* FIX TEXT POSITION */
+    display: flex !important;
+    justify-content: flex-start !important; /* move text slightly left */
+    padding-left: 24px !important;          /* adjust how far left */
+}
 
   footer{
     text-align:center;
