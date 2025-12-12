@@ -12,6 +12,10 @@
     --bg-end: #b30000;   /* bottom-right */
     --cream: #ffe9c6;
     --gold: rgba(255,215,0,0.95);
+    --gold-faded: rgba(255,215,0,0.16);
+    --white-faded: rgba(255,255,255,0.88);
+    --muted-white: rgba(255,255,255,0.7);
+    --card-shadow: 0 10px 28px rgba(0,0,0,0.42);
   }
 
   /* Page background (diagonal) */
@@ -24,70 +28,129 @@
     overflow-x:hidden;
   }
 
+  /* Header centered logo + title */
   header{
     display:flex;
     align-items:center;
-    gap:16px;
-    padding:22px 28px;
+    justify-content:center;
+    flex-direction:column;
+    padding:18px 12px 8px;
+    gap:12px;
   }
 
-  header img{ width:120px; height:auto; display:block; }
+  /* very rounded logo box, smaller size */
+  .logo-box{
+    width:86px;
+    height:86px;
+    border-radius:24px; /* very rounded box */
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .logo-box img{
+    width:74px;
+    height:74px;
+    object-fit:cover;
+    border-radius:18px;
+    display:block;
+  }
+
+  /* Title under logo, centered and large, single-line */
+  .site-title{
+    font-weight:800;
+    color:var(--white-faded);
+    font-size:28px;
+    margin:0;
+    line-height:1;
+    text-align:center;
+    white-space:nowrap; /* forces one line */
+    letter-spacing:0.6px;
+  }
 
   .container{
     max-width:1100px;
     margin: 0 auto;
-    padding: 28px;
+    padding: 18px 20px 36px;
   }
 
+  /* Hero / subtitle area centered with faded dark box */
   .hero{
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:24px;
-    margin-bottom:28px;
+    justify-content:center;
+    flex-direction:column;
+    gap:12px;
+    margin-bottom:18px;
   }
 
-  .hero-left{
-    color:var(--cream);
+  .subtitle-box{
+    background: rgba(0,0,0,0.20); /* dark modern faded box */
+    padding:10px 14px;
+    border-radius:14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.30) inset;
+    max-width:780px;
+    text-align:center;
   }
-  .hero-left h1{
-    margin:0;font-size:28px;letter-spacing:0.2px;
+
+  .subtitle-box h1{
+    margin:0;
+    font-size:14px; /* reduced a bit */
+    text-transform:uppercase; /* all upper case */
+    color: var(--muted-white);
+    letter-spacing:0.9px;
+    font-weight:700;
   }
-  .hero-left p{ margin:8px 0 0 0; opacity:0.9; }
+
+  .hero p{
+    margin:0;
+    margin-top:6px;
+    font-size:15px;
+    color: rgba(255,255,255,0.88); /* faded white modern */
+    text-transform:capitalize; /* title case visual */
+    text-align:center;
+    max-width:760px;
+  }
 
   /* Package grid */
   .grid{
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap:20px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap:22px;
   }
 
   .package-box{
     display:flex;
     align-items:flex-start;
-    gap:14px;
+    gap:16px;
     background: var(--deep-red); /* plain deep red */
-    border-radius:14px;
-    padding:14px;
-    border: 1px solid rgba(255,215,0,0.18); /* soft gold outline */
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    border-radius:16px;
+    padding:18px;
+    border: 1px solid var(--gold-faded); /* soft gold faded outline */
+    box-shadow: var(--card-shadow);
     transition: transform .26s cubic-bezier(.2,.9,.3,1), box-shadow .26s;
+    min-height:220px; /* increased vertical size */
   }
 
   /* soft gold glow on hover (subtle) */
   .package-box:hover{
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 10px 34px rgba(179,56,0,0.42), 0 0 28px rgba(255,215,0,0.12);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 16px 40px rgba(179,56,0,0.42), 0 0 36px rgba(255,215,0,0.10);
   }
 
+  /* thumbnail taller than it is wide */
   .thumb{
-    width:92px;
-    height:92px;
+    width:112px;
+    height:160px; /* length longer than width */
     flex-shrink:0;
-    border-radius:10px;
+    border-radius:12px;
     object-fit:cover;
     background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.06));
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 8px 26px rgba(0,0,0,0.5);
     border: 1px solid rgba(255,255,255,0.03);
   }
 
@@ -95,63 +158,108 @@
     flex:1;
     display:flex;
     flex-direction:column;
-    gap:8px;
+    gap:10px;
   }
 
   .pkg-title{
     margin:0;
     font-size:18px;
     color:var(--cream);
-    font-weight:700;
+    font-weight:800;
     letter-spacing:0.2px;
+    white-space:nowrap; /* one line, no breaking */
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
 
   .pkg-price{
     color:#fff;
-    font-weight:700;
-    font-size:16px;
+    font-weight:800;
+    font-size:20px; /* increased price size */
+    margin-top:4px;
+    white-space:nowrap;
+  }
+
+  /* notes slightly larger and faded white */
+  .card-notes{
+    margin-top:6px;
+    font-size:13px;
+    color: rgba(255,255,255,0.82);
+    opacity:0.92;
   }
 
   .actions{
     display:flex;
-    gap:10px;
+    gap:12px;
     align-items:center;
-    margin-top:6px;
+    margin-top:auto; /* push actions to bottom of the card */
   }
 
-  .btn{
-    display:inline-block;
-    background: linear-gradient(135deg,#ffaf3a,#ff7300);
-    color:#000;
-    padding:10px 14px;
-    border-radius:10px;
+  /* VIEW DETAILS button (faded thicker outline) */
+  .view-details{
+    background: transparent;
+    border: 2px solid rgba(255,255,255,0.10); /* thicker faded outline */
+    color: #fff;
+    padding:10px 18px;
+    border-radius:12px;
     font-weight:700;
+    cursor:pointer;
+    transition: background .18s, transform .18s, box-shadow .18s;
+    min-width:128px;
+    white-space:nowrap;
+  }
+  .view-details:hover{ background: rgba(255,255,255,0.03); transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+
+  /* REGISTER NOW primary button - larger and full visible */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    background: linear-gradient(135deg,#ffaf3a,#ff7300);
+    color:#050505;
+    padding:12px 22px;
+    border-radius:12px;
+    font-weight:800;
     text-decoration:none;
-    box-shadow: 0 6px 20px rgba(255,115,0,0.18);
+    box-shadow: 0 10px 28px rgba(255,115,0,0.18);
     transition: transform .18s ease, box-shadow .18s ease;
     cursor:pointer;
+    border:0;
+    min-width:160px; /* increased length so text stays in one line */
+    white-space:nowrap;
   }
   .btn:active{ transform: scale(.98); }
 
-  .view-details{
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.08);
-    color: #fff;
-    padding:8px 12px;
-    border-radius:10px;
-    font-weight:600;
-    cursor:pointer;
-    transition: background .18s, transform .18s;
+  /* pulse animation for register buttons */
+  @keyframes btnPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
   }
-  .view-details:hover{ background: rgba(255,255,255,0.03); transform: translateY(-3px); }
+  .btn.pulse {
+    animation: btnPulse 2.2s ease-in-out infinite;
+  }
 
-  /* faded small-note benefits (inside card preview) */
-  .card-notes{
-    margin-top:6px;
-    font-size:12px;
-    color: rgba(255,255,255,0.75);
-    opacity:0.85;
+  /* loading (please wait) state */
+  .btn.loading {
+    background: linear-gradient(90deg, rgba(196,182,158,0.12), rgba(200,180,130,0.10));
+    color: rgba(25,20,18,0.92);
+    box-shadow: none;
+    pointer-events: none;
   }
+
+  /* loader circle */
+  .loader {
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    border:2px solid rgba(0,0,0,0.12);
+    border-top-color: rgba(0,0,0,0.32);
+    animation: spin 0.9s linear infinite;
+    display:inline-block;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* Modal overlay */
   .modal-bg{
@@ -159,106 +267,117 @@
     display:none;
     align-items:center;
     justify-content:center;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0,0,0,0.45); /* keeps the dark bluish overlay/backdrop blur */
     backdrop-filter: blur(7px);
     z-index:1200;
     padding:20px;
   }
 
+  /* modal now deep red/orange blend */
   .modal{
     width:100%;
-    max-width:520px;
-    background: #fff;
-    color:#111;
+    max-width:620px;
+    background: linear-gradient(135deg, rgba(122,0,0,0.98) 0%, rgba(179,24,0,0.96) 100%);
+    color: #fff; /* text reversed to white for contrast */
     border-radius:14px;
-    padding:18px;
-    box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+    padding:14px;
+    box-shadow: 0 18px 60px rgba(0,0,0,0.6);
     transform-origin:center;
     animation: modalPop .28s cubic-bezier(.2,.9,.3,1);
     position:relative;
-  }
-
-  @keyframes modalPop{
-    from{ transform: scale(.92); opacity:0; }
-    to{ transform: scale(1); opacity:1; }
+    overflow:hidden;
   }
 
   .modal .close{
-    position:absolute; right:14px; top:10px; font-size:22px; cursor:pointer; color:#666;
+    position:absolute; right:14px; top:10px; font-size:22px; cursor:pointer; color:rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.02); border-radius:8px; padding:4px 8px;
   }
 
   .modal-img{
     width:100%;
-    height:220px;
+    height:260px;
     object-fit:cover;
     border-radius:10px;
     display:block;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.04);
   }
 
   .modal-title{
     margin:12px 0 6px 0;
-    color:#111;
-    font-weight:700;
+    color:var(--white-faded);
+    font-weight:800;
     font-size:20px;
   }
 
   .modal-benefits{
-    background:#fafafa;
-    padding:10px;
-    border-radius:8px;
-    color:#333;
-    font-size:13px;
-    line-height:1.5;
-    opacity:0.85;
+    background: rgba(255,255,255,0.06);
+    padding:12px;
+    border-radius:10px;
+    color: rgba(255,255,255,0.95);
+    font-size:14px;
+    line-height:1.45;
+    opacity:0.95;
     margin-bottom:12px;
   }
 
   .modal .register{
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
     text-decoration:none;
     padding:12px 18px;
-    border-radius:10px;
+    border-radius:12px;
     font-weight:800;
-    color:#000;
+    color:#050505;
     background: linear-gradient(135deg,#ffaf3a,#ff7300);
     box-shadow: 0 12px 30px rgba(255,115,0,0.18);
+    cursor:pointer;
+    border:0;
+    white-space:nowrap;
+  }
+
+  @keyframes modalPop{
+    from{ transform: scale(.96); opacity:0; }
+    to{ transform: scale(1); opacity:1; }
   }
 
   /* Responsive tweaks */
   @media (max-width:520px){
-    .thumb{ width:78px; height:78px; }
-    .hero{ flex-direction:column; align-items:flex-start; gap:12px; }
+    .thumb{ width:92px; height:132px; }
+    .site-title{ font-size:22px; white-space:normal; } /* allow wrap on very small screens */
+    .grid{ gap:16px; grid-template-columns: 1fr; }
+    .package-box{ min-height:200px; padding:14px; }
   }
-
 </style>
 </head>
 <body>
 
 <header>
-  <!-- Replace logo.png with your file -->
-  <img src="Logo.jpg" alt="FORTUNE-X logo">
-  <div style="color:var(--cream); font-weight:700;">FORTUNE-X ENROLLMENT</div>
+  <div class="logo-box" aria-hidden="true">
+    <img src="Logo.jpg" alt="FORTUNE-X logo">
+  </div>
+  <h1 class="site-title">FORTUNE-X REGISTRATION</h1>
 </header>
 
 <main class="container">
   <section class="hero">
-    <div class="hero-left">
+    <div class="subtitle-box">
       <h1>Select your preferred package to continue</h1>
-      <p>Pick a package to get started and start earning non-stop everyday; RUSH NOW!.</p>
     </div>
-    <div><!-- intentional space for future CTA --></div>
+    <p>Pick a package to get started and start earning non-stop everyday; RUSH NOW!.</p>
   </section>
 
   <section class="grid">
 
-    <!-- STARTER PACKAGE (card with small thumbnail) -->
+    <!-- STARTER PACKAGE (card with taller thumbnail) -->
     <article class="package-box" id="starter-card" data-package="starter">
       <!-- small thumbnail shown on the card -->
-      <!-- Replace starter-thumb.jpg with your small image file -->
       <img class="thumb" src="Starter thumb.jpg" alt="Starter thumbnail">
 
       <div class="package-content">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
           <h3 class="pkg-title">FORTUNE-X STARTER PACKAGE</h3>
           <div class="pkg-price">₦7,500</div>
         </div>
@@ -269,18 +388,19 @@
 
         <div class="actions">
           <button class="view-details" onclick="openModal('starter')">VIEW DETAILS</button>
-          <a class="btn" href="https://paystack.shop/pay/Starterpackage1" target="_blank" rel="noopener">REGISTER NOW</a>
+          <!-- register button now handled by JS for same-tab redirect and loading animation -->
+          <a class="btn pulse" data-href="https://paystack.shop/pay/Starterpackage1" href="https://paystack.shop/pay/Starterpackage1">REGISTER NOW</a>
         </div>
       </div>
     </article>
 
-    <!-- PLUS PACKAGE (card with small thumbnail) -->
+    <!-- PLUS PACKAGE (card with taller thumbnail) -->
     <article class="package-box" id="plus-card" data-package="plus">
       <!-- Replace plus-thumb.jpg with your small image file -->
       <img class="thumb" src="Plus thumb.jpg" alt="Plus thumbnail">
 
       <div class="package-content">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
           <h3 class="pkg-title">FORTUNE-X PLUS PACKAGE</h3>
           <div class="pkg-price">₦14,500</div>
         </div>
@@ -291,7 +411,7 @@
 
         <div class="actions">
           <button class="view-details" onclick="openModal('plus')">VIEW DETAILS</button>
-          <a class="btn" href="https://paystack.shop/pay/pluspackage1" target="_blank" rel="noopener">REGISTER NOW</a>
+          <a class="btn pulse" data-href="https://paystack.shop/pay/pluspackage1" href="https://paystack.shop/pay/pluspackage1">REGISTER NOW</a>
         </div>
       </div>
     </article>
@@ -319,7 +439,7 @@
       💎 Subscription valid for 6 months
     </div>
 
-    <a class="register" target="_blank" rel="noopener" href="https://paystack.shop/pay/Starterpackage1">REGISTER NOW</a>
+    <a class="register pulse" data-href="https://paystack.shop/pay/Starterpackage1" href="https://paystack.shop/pay/Starterpackage1">REGISTER NOW</a>
   </div>
 </div>
 
@@ -344,7 +464,7 @@
       💎 Subscription valid for 12 months
     </div>
 
-    <a class="register" target="_blank" rel="noopener" href="https://paystack.shop/pay/pluspackage1">REGISTER NOW</a>
+    <a class="register pulse" data-href="https://paystack.shop/pay/pluspackage1" href="https://paystack.shop/pay/pluspackage1">REGISTER NOW</a>
   </div>
 </div>
 
@@ -398,6 +518,53 @@
       box.style.transition = '';
     });
   });
+
+  /*
+   Register buttons behaviour:
+   - pulse animation runs by default (class "pulse")
+   - on click: stop pulse, set loading state (class "loading"), change inner text to "PLEASE WAIT" and show loader
+   - after 6 seconds redirect to the button's data-href in the same tab
+   - preserve original href attribute if JS disabled (progressive enhancement)
+  */
+  function makeRegisterHandlers(){
+    const regs = Array.from(document.querySelectorAll('.btn, .register'));
+    regs.forEach(el => {
+      // avoid double-binding
+      if(el._fortuneAttached) return;
+      el._fortuneAttached = true;
+
+      el.addEventListener('click', function(e){
+        // if already loading, ignore
+        if(el.classList.contains('loading')) { e.preventDefault(); return; }
+
+        // prefer JS-controlled redirect in same tab
+        const dest = el.getAttribute('data-href') || el.getAttribute('href') || '#';
+        // prevent default navigate
+        e.preventDefault();
+
+        // stop pulse
+        el.classList.remove('pulse');
+
+        // populate loading UI
+        el.classList.add('loading');
+        const originalContent = el.innerHTML;
+        // create loader + label
+        el.innerHTML = '<span style="font-weight:800;letter-spacing:0.6px;">PLEASE WAIT</span><span class="loader" aria-hidden="true"></span>';
+
+        // after 6 seconds redirect in same tab
+        setTimeout(() => {
+          // final navigation
+          window.location.href = dest;
+        }, 6000);
+      });
+    });
+  }
+
+  // init register handlers on DOM ready
+  document.addEventListener('DOMContentLoaded', makeRegisterHandlers);
+  // also in case script runs late
+  makeRegisterHandlers();
+
 </script>
 </body>
-  </html>
+   </html>
