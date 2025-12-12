@@ -15,7 +15,7 @@
     --gold-faded: rgba(255,215,0,0.14);
     --white-faded: rgba(255,255,255,0.88);
     --muted-white: rgba(255,255,255,0.7);
-    --card-shadow: 0 10px 28px rgba(0,0,0,0.42);
+    --card-shadow: 0 12px 36px rgba(0,0,0,0.46);
   }
 
   html,body{
@@ -64,12 +64,12 @@
     display:block;
   }
 
-  /* Reduced title size so it fits any screen and does not overflow */
+  /* title size kept small so it fits screens */
   .site-title{
     font-family:"Times New Roman", Times, serif;
     font-weight:800;
     color:var(--white-faded);
-    font-size:22px; /* reduced from previous */
+    font-size:22px;
     margin:0;
     text-align:center;
     white-space:nowrap;
@@ -115,7 +115,7 @@
     font-family:"Times New Roman", Times, serif;
   }
 
-  /* Slightly less bold than before but still prominent. RUSH NOW kept uppercase in the text itself. */
+  /* Slightly less bold than before but still prominent. RUSH NOW kept uppercase */
   .hero p{
     margin:0;
     margin-top:6px;
@@ -123,7 +123,7 @@
     color:rgba(255,255,255,0.88);
     text-align:center;
     max-width:760px;
-    font-weight:600; /* less bold than 700 */
+    font-weight:600; /* less bold */
     text-transform:none;
     line-height:1.15;
   }
@@ -136,7 +136,9 @@
     width:100%;
   }
 
-  /* Package card: vertical. width +20px (366 -> 366 kept), increased length */
+  /* Package card: vertical layout.
+     Width slightly increased a bit from previous, height also small increase.
+     These are intentionally small changes so cards fit and have space. */
   .package-box{
     display:flex;
     flex-direction:column;
@@ -147,40 +149,48 @@
     padding:18px;
     border:1px solid var(--gold-faded);
     box-shadow:var(--card-shadow);
-    width:366px; /* increased by +20px as requested earlier */
-    min-height:420px; /* slightly increased length to give breathing room */
+    width:372px;       /* very small increase from previous */
+    min-height:436px;  /* small increase in length so content fits comfortably */
     box-sizing:border-box;
     transition: transform .26s cubic-bezier(.2,.9,.3,1), box-shadow .26s;
   }
 
   .package-box:hover{
     transform:translateY(-6px) scale(1.01);
-    box-shadow:0 16px 40px rgba(179,56,0,0.42),0 0 36px rgba(255,215,0,0.10);
+    box-shadow:0 20px 48px rgba(179,56,0,0.42),0 0 44px rgba(255,215,0,0.10);
   }
 
-  /*
-    Thumbnails now auto-fit images without cropping:
-    - object-fit: contain so entire image is visible
-    - set max-height to 260px (your chosen final size) but allow height to be auto so portrait/landscape both fit without cropping
-  */
-  .thumb{
+  /* Image box wrapper (Option A style: soft gradient background, padding, rounded, soft glow).
+     This is the 'box' you asked to restore. The image inside will auto-fit (contain) so nothing is cropped.
+     The box expands to the image up to the max-height limits; padding keeps the frame look like before. */
+  .image-box{
     width:92%;
-    height:auto;
-    max-height:260px; /* final chosen limit */
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px; /* small padding like before */
     border-radius:12px;
-    object-fit:contain; /* contain = no cropping, entire image visible */
-    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.06));
-    box-shadow:0 8px 26px rgba(0,0,0,0.5);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 8px 22px rgba(255,255,255,0.02) inset;
     border:1px solid rgba(255,255,255,0.03);
-    transition: transform 0.45s cubic-bezier(.2,.9,.3,1);
-    display:block;
+    box-sizing:border-box;
   }
 
-  /* image zoom on tap / when scrolled into view */
-  .thumb.zoomed,
-  .thumb:active,
-  .thumb:hover{
-    transform: scale(1.06);
+  /* thumbnail img inside the box: contain so full image visible; width auto so portrait/landscape both fit */
+  .image-box img{
+    width:auto;
+    max-width:100%;
+    height:auto;
+    max-height:260px; /* chosen final thumb limit */
+    object-fit:contain; /* ensures full image visible */
+    display:block;
+    border-radius:8px;
+    transition: transform 0.45s cubic-bezier(.2,.9,.3,1);
+  }
+
+  /* zoomed class used for scroll/tap animation */
+  .image-box img.zoomed{
+    transform:scale(1.06);
   }
 
   .package-content{
@@ -239,10 +249,9 @@
     width:100%;
   }
 
-  /* VIEW DETAILS thinner gold outline and centered text */
   .view-details{
     background:transparent;
-    border:1px solid var(--gold); /* reduced thickness to 1px */
+    border:1px solid var(--gold); /* thin gold outline */
     color:#fff;
     padding:10px 16px;
     border-radius:12px;
@@ -262,7 +271,6 @@
     box-shadow:0 6px 18px rgba(0,0,0,0.4);
   }
 
-  /* REGISTER NOW primary button, Times New Roman */
   .btn{
     display:inline-flex;
     align-items:center;
@@ -281,42 +289,24 @@
     min-width:140px;
     transition:transform .18s, box-shadow .18s;
     font-family:"Times New Roman", Times, serif;
-    position:relative; /* needed for overlay trick */
+    position:relative;
     z-index:1;
   }
 
-  .btn.pulse{
-    animation: btnPulse 2.2s ease-in-out infinite;
-  }
-  @keyframes btnPulse{
-    0%{ transform: scale(1); }
-    50%{ transform: scale(1.03); }
-    100%{ transform: scale(1); }
-  }
+  .btn.pulse{ animation: btnPulse 2.2s ease-in-out infinite; }
+  @keyframes btnPulse{ 0%{transform:scale(1);}50%{transform:scale(1.03);}100%{transform:scale(1);} }
 
-  /*
-    Loading state: we want the button's BOX to fade while keeping the text + loader fully visible.
-    Approach:
-    - keep the button content untouched (text & loader white)
-    - add a semi-transparent overlay behind the text by using a pseudo-element ::before placed underneath the content
-    - do NOT change opacity of the element (which would also fade text/loader)
-  */
-  .btn.loading{
-    background:linear-gradient(135deg,#ffaf3a,#ff7300);
-    color: #ffffff; /* text white for loader visibility as requested */
-    pointer-events:none;
-  }
+  /* loading: keep text + loader white and visible; fade the button box using a ::before overlay */
+  .btn.loading{ color:#fff; pointer-events:none; }
   .btn.loading::before{
     content:"";
     position:absolute;
     inset:0;
-    background: rgba(255,255,255,0.28); /* fade overlay for the box */
+    background: rgba(255,255,255,0.28); /* fades the box but text remains visible because text is on top */
     border-radius:12px;
-    z-index:0; /* behind text (text is z-index:1) */
-    /* no pointer events so clicks don't get blocked (though pointer-events:none above) */
-    pointer-events:none;
+    z-index:0;
   }
-  .btn .loader{ margin-left:10px; }
+  .btn.loading .loader{ margin-left:10px; }
 
   .loader{
     width:16px;
@@ -345,20 +335,20 @@
 
   .modal{
     width:100%;
-    max-width:880px;
+    max-width:900px;
     background:linear-gradient(135deg, rgba(122,0,0,0.98), rgba(179,24,0,0.96));
     color:#fff;
     border-radius:14px;
-    padding:16px;
-    box-shadow:0 18px 60px rgba(0,0,0,0.6);
+    padding:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
     position:relative;
   }
 
   .modal .close{
     position:absolute;
-    right:14px; 
+    right:14px;
     top:8px;
-    font-size:34px; /* increased a bit */
+    font-size:34px;
     cursor:pointer;
     color:rgba(255,255,255,0.95);
     background:rgba(255,255,255,0.02);
@@ -366,19 +356,35 @@
     border-radius:10px;
   }
 
-  /* Modal image uses object-fit: contain so it auto fits like thumb (no cropping) */
-  .modal-img{
+  /* Modal image box (same soft box style) */
+  .modal-image-box{
     width:100%;
-    height:520px; /* increased a bit as requested */
-    object-fit:contain; /* ensure whole image visible */
-    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:14px; /* slightly bigger padding for modal */
+    border-radius:12px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+    box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 8px 26px rgba(255,255,255,0.02) inset;
+    border:1px solid rgba(255,255,255,0.03);
+    box-sizing:border-box;
+    margin-bottom:12px;
+  }
+
+  .modal-image-box img{
+    width:auto;
+    max-width:100%;
+    height:auto;
+    max-height:520px; /* larger modal image limit */
+    object-fit:contain;
     display:block;
+    border-radius:8px;
   }
 
   .modal-title{
-    margin:12px 0 6px 0;
+    margin:6px 0 8px 0;
     color:var(--white-faded);
-    font-size:18px; /* slight reduction to balance modal */
+    font-size:18px;
     font-weight:700;
     font-family:"Times New Roman", Times, serif;
   }
@@ -392,7 +398,6 @@
     margin-bottom:12px;
   }
 
-  /* center the modal's register button and keep it larger */
   .modal .register{
     display:block;
     margin:6px auto 0 auto;
@@ -407,16 +412,18 @@
     text-align:center;
     color:rgba(255,255,255,0.35);
     font-size:14px;
-    padding:16px 0 6px; /* moved up slightly */
+    padding:16px 0 6px;
   }
 
-  /* responsive */
+  /* Responsive */
   @media (max-width:520px){
     .site-title{ font-size:20px; white-space:normal; }
-    .package-box{ width:92%; min-height:360px; max-width:420px; }
-    .thumb{ max-height:220px; }
+    .package-box{ width:92%; min-height:380px; max-width:420px; }
+    .image-box{ padding:10px; }
+    .image-box img{ max-height:220px; }
     .modal{ max-width:96%; padding:12px; }
-    .modal-img{ height:260px; object-fit:contain; }
+    .modal-image-box{ padding:10px; }
+    .modal-image-box img{ max-height:260px; }
   }
 </style>
 </head>
@@ -432,22 +439,24 @@
 
   <section class="hero">
     <div class="subtitle-box">
-      <h1>Select your preferred package to complete your registration:</h1>
+      <h1>Select your preferred package to continue</h1>
     </div>
-    <!-- sentence case, RUSH NOW kept uppercase at the end -->
-    <p>Pick a package to get started and start earning non-stop everyday; <span style="text-transform:uppercase;font-weight:700">RUSH NOW:</span></p>
+    <p>Pick a package to get started and start earning non-stop everyday; <span style="text-transform:uppercase;font-weight:700">RUSH NOW!</span></p>
   </section>
 
   <section class="grid">
 
+    <!-- STARTER -->
     <article class="package-box" id="starter-card" data-package="starter">
-      <img class="thumb" src="Starter thumb.jpg" alt="Starter thumbnail">
+      <div class="image-box">
+        <img src="Starter thumb.jpg" alt="Starter thumbnail">
+      </div>
+
       <div class="package-content">
         <h3 class="pkg-title">FORTUNE-X STARTER PACKAGE</h3>
         <div class="pkg-price"><span class="price-bullet" aria-hidden="true"></span>₦7,500</div>
-        <div class="card-notes">• up to ₦8,000 daily earnings<br>
-          • Minimum withdrawal ₦15,000<br>
-          • 6 months valid subscription</div>
+        <div class="card-notes">• up to ₦8,000 daily earnings • Minimum withdrawal ₦15,000 • 6-month subscription</div>
+
         <div class="actions">
           <button class="view-details" onclick="openModal('starter')">VIEW DETAILS</button>
           <a class="btn pulse" data-href="https://paystack.shop/pay/Starterpackage1" role="button">REGISTER NOW</a>
@@ -455,14 +464,17 @@
       </div>
     </article>
 
+    <!-- PLUS -->
     <article class="package-box" id="plus-card" data-package="plus">
-      <img class="thumb" src="Plus thumb.jpg" alt="Plus thumbnail">
+      <div class="image-box">
+        <img src="Plus thumb.jpg" alt="Plus thumbnail">
+      </div>
+
       <div class="package-content">
         <h3 class="pkg-title">FORTUNE-X PLUS PACKAGE</h3>
         <div class="pkg-price"><span class="price-bullet" aria-hidden="true"></span>₦14,500</div>
-        <div class="card-notes">• Up to ₦18,000 daily earnings<br>
-          • No withdrawal limit<br> 
-          • 12 months valid subscription</div>
+        <div class="card-notes">• Up to ₦18,000 daily earnings • No withdrawal limit • 12-month subscription</div>
+
         <div class="actions">
           <button class="view-details" onclick="openModal('plus')">VIEW DETAILS</button>
           <a class="btn pulse" data-href="https://paystack.shop/pay/pluspackage1" role="button">REGISTER NOW</a>
@@ -474,12 +486,18 @@
 
 </main>
 
-<!-- STARTER MODAL -->
+<!-- MODALS -->
+
 <div id="starterModal" class="modal-bg" onclick="bgClose(event,'starter')">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="starterTitle">
     <div class="close" onclick="closeModal('starter')">×</div>
-    <img src="General 1.jpg" alt="Starter large" class="modal-img">
+
+    <div class="modal-image-box">
+      <img src="General 1.jpg" alt="Starter large">
+    </div>
+
     <div id="starterTitle" class="modal-title">FORTUNE-X Starter Package</div>
+
     <div class="modal-benefits" aria-label="starter benefits">
       💎 ₦6000 instant reward claim<br>
       💎 Casino games reward $50<br>
@@ -489,16 +507,21 @@
       💎 Limited FortuneX box<br>
       💎 Subscription valid for 6 months
     </div>
+
     <a class="btn pulse register" data-href="https://paystack.shop/pay/Starterpackage1" role="button">REGISTER NOW</a>
   </div>
 </div>
 
-<!-- PLUS MODAL -->
 <div id="plusModal" class="modal-bg" onclick="bgClose(event,'plus')">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="plusTitle">
     <div class="close" onclick="closeModal('plus')">×</div>
-    <img src="General 2.jpg" alt="Plus large" class="modal-img">
+
+    <div class="modal-image-box">
+      <img src="General 2.jpg" alt="Plus large">
+    </div>
+
     <div id="plusTitle" class="modal-title">FORTUNE-X Plus Package</div>
+
     <div class="modal-benefits" aria-label="plus benefits">
       💎 ₦12,000 instant reward claim<br>
       💎 Online and offline reviewing access<br>
@@ -509,6 +532,7 @@
       💎 Unlimited FortuneX box<br>
       💎 Subscription valid for 12 months
     </div>
+
     <a class="btn pulse register" data-href="https://paystack.shop/pay/pluspackage1" role="button">REGISTER NOW</a>
   </div>
 </div>
@@ -516,24 +540,22 @@
 <footer>fortune-xnetwork©2025.</footer>
 
 <script>
-  // modal open/close
+  /* Modal open/close (no other behavior changed) */
   function openModal(key){
     const el = document.getElementById(key + 'Modal');
     if(!el) return;
     el.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    // focus register inside modal
     setTimeout(()=>{
       const btn = el.querySelector('.register');
       if(btn) btn.focus();
-    }, 180);
+    },180);
   }
   function closeModal(key){
     const el = document.getElementById(key + 'Modal');
     if(!el) return;
     el.style.display = 'none';
     document.body.style.overflow = '';
-    // clean registering state if any
     const modalInner = el.querySelector('.modal');
     if(modalInner) modalInner.classList.remove('registering');
   }
@@ -546,33 +568,43 @@
     }
   });
 
-  // Image zoom on tap/scroll:
-  // - tap (pointerdown) briefly scales (handled by :active)
-  // - scrolling into view uses IntersectionObserver to add .zoomed class
+  /* Image zoom on scroll / tap:
+     - IntersectionObserver adds zoomed class when image >=60% visible
+     - pointerdown triggers a short zoom to simulate tap interaction
+  */
   (function imageZoomOnView(){
-    const thumbs = document.querySelectorAll('.thumb');
-    if(!('IntersectionObserver' in window)) return; // old browsers skip
+    const images = document.querySelectorAll('.image-box img');
+    if(!('IntersectionObserver' in window)) {
+      // fallback: simple tap zoom only
+      images.forEach(img=>{
+        img.addEventListener('pointerdown', ()=>{
+          img.classList.add('zoomed');
+          setTimeout(()=> img.classList.remove('zoomed'), 350);
+        });
+      });
+      return;
+    }
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(en=>{
-        if(en.isIntersecting){
-          en.target.classList.add('zoomed');
+        const img = en.target;
+        if(en.isIntersecting && en.intersectionRatio >= 0.6){
+          img.classList.add('zoomed');
         } else {
-          en.target.classList.remove('zoomed');
+          img.classList.remove('zoomed');
         }
       });
-    }, { root: null, rootMargin: '0px', threshold: 0.6 });
-    thumbs.forEach(t=>{
-      // ensure images that are already visible get observed
-      io.observe(t);
-      // add quick tap effect (touch)
-      t.addEventListener('pointerdown', ()=>{
-        t.classList.add('zoomed');
-        setTimeout(()=> t.classList.remove('zoomed'), 350);
+    }, { root:null, rootMargin:'0px', threshold: [0.6] });
+
+    images.forEach(img=>{
+      io.observe(img);
+      img.addEventListener('pointerdown', ()=>{
+        img.classList.add('zoomed');
+        setTimeout(()=> img.classList.remove('zoomed'), 350);
       });
     });
   })();
 
-  // Register buttons: show loading state, keep text + loader visible while box fades
+  /* Register buttons: on click show loading, keep text+loader white, only box fades via ::before overlay */
   function makeRegisterHandlers(){
     const regs = Array.from(document.querySelectorAll('.btn, .register'));
     regs.forEach(el=>{
@@ -580,7 +612,6 @@
       el._fortuneAttached = true;
 
       el.addEventListener('click', function(e){
-        // preserve progressive enhancement: if no data-href, follow href
         const dest = el.getAttribute('data-href') || el.getAttribute('href') || '#';
         e.preventDefault();
         if(el.classList.contains('loading')) return;
@@ -588,28 +619,22 @@
         // stop pulse
         el.classList.remove('pulse');
 
-        // if this is inside modal, add registering class to modal to allow further visual feedback if needed
+        // if inside modal, ensure modal stays and register button centered (no shift)
         const modalEl = el.closest('.modal');
-        if(modalEl){
-          // ensure modal element has registering class (used earlier if needed)
-          modalEl.classList.add('registering');
-        }
+        if(modalEl) modalEl.classList.add('registering');
 
-        // set loading state
+        // set loading UI
         el.classList.add('loading');
-        // set inner content: PLEASE WAIT and loader (loader is white and text white)
         el.innerHTML = '<span style="font-weight:800;letter-spacing:0.6px;color:#fff;">PLEASE WAIT</span><span class="loader" aria-hidden="true"></span>';
 
-        // after 6 seconds redirect in same tab
         setTimeout(()=>{
           window.location.href = dest;
         }, 6000);
       });
     });
   }
-
   document.addEventListener('DOMContentLoaded', makeRegisterHandlers);
   makeRegisterHandlers();
 </script>
 </body>
-  </html>
+    </html>
