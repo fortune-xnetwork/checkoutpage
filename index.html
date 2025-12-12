@@ -324,9 +324,12 @@
   }
 
   .modal-image-box img{
-    width:100%;
-    height:620px;        /* FINAL modal image height */
-    object-fit:cover;    /* OPTION A FULL BLEED */
+    width:auto;
+    max-width:100%;
+    height:auto;
+    max-height:260px; /* same as thumbnail */
+    object-fit:contain;
+    display:block;
     border-radius:8px;
   }
 
