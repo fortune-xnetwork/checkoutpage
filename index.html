@@ -15,7 +15,7 @@
     --gold-faded: rgba(255,215,0,0.14);
     --white-faded: rgba(255,255,255,0.88);
     --muted-white: rgba(255,255,255,0.7);
-    --card-shadow: 0 12px 36px rgba(0,0,0,0.46);
+    --card-shadow: 0 10px 28px rgba(0,0,0,0.42);
   }
 
   html,body{
@@ -68,7 +68,7 @@
     font-family:"Times New Roman", Times, serif;
     font-weight:800;
     color:var(--white-faded);
-    font-size:22px;
+    font-size:28px;
     margin:0;
     text-align:center;
     white-space:nowrap;
@@ -121,9 +121,8 @@
     color:rgba(255,255,255,0.88);
     text-align:center;
     max-width:760px;
-    font-weight:600;
+    font-weight:700;
     text-transform:none;
-    line-height:1.15;
   }
 
   .grid{
@@ -134,7 +133,6 @@
     width:100%;
   }
 
-  /* PACKAGE CARD SECTION */
   .package-box{
     display:flex;
     flex-direction:column;
@@ -145,37 +143,25 @@
     padding:18px;
     border:1px solid var(--gold-faded);
     box-shadow:var(--card-shadow);
-    width:382px;           /* very small increase */
-    min-height:446px;      /* very small increase */
+    width:366px; /* increased width +20px */
+    min-height:400px; /* increased card length */
     box-sizing:border-box;
     transition: transform .26s cubic-bezier(.2,.9,.3,1), box-shadow .26s;
   }
 
   .package-box:hover{
     transform:translateY(-6px) scale(1.01);
-    box-shadow:0 20px 48px rgba(179,56,0,0.42),0 0 44px rgba(255,215,0,0.10);
+    box-shadow:0 16px 40px rgba(179,56,0,0.42),0 0 36px rgba(255,215,0,0.10);
   }
 
-  /* RESTORED OPTION A IMAGE BOX */
-  .image-box{
+  .thumb{
     width:92%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:12px;
+    height:260px; /* final height */
     border-radius:12px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
-    box-shadow: 0 10px 30px rgba(0,0,0,0.45), 0 8px 22px rgba(255,255,255,0.02) inset;
+    object-fit:cover;
+    background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.06));
+    box-shadow:0 8px 26px rgba(0,0,0,0.5);
     border:1px solid rgba(255,255,255,0.03);
-    box-sizing:border-box;
-  }
-
-  .image-box img{
-    width:100%;
-    height:300px;        /* FINAL height for thumbnails */
-    object-fit:cover;    /* OPTION A */
-    border-radius:8px;
-    display:block;
   }
 
   .package-content{
@@ -192,7 +178,9 @@
     font-size:16px;
     color:var(--cream);
     font-weight:800;
+    letter-spacing:0.2px;
     white-space:nowrap;
+    width:94%;
     font-family:"Times New Roman", Times, serif;
   }
 
@@ -201,9 +189,11 @@
     font-weight:900;
     font-size:22px;
     margin-top:4px;
+    white-space:nowrap;
     display:flex;
     align-items:center;
     gap:8px;
+    justify-content:center;
   }
 
   .price-bullet{
@@ -211,11 +201,13 @@
     height:8px;
     background:var(--gold);
     border-radius:50%;
+    box-shadow:0 4px 10px rgba(255,170,0,0.12);
   }
 
   .card-notes{
     margin-top:6px;
     font-size:14px;
+    color:rgba(255,255,255,0.90);
     opacity:0.95;
     width:92%;
   }
@@ -223,18 +215,31 @@
   .actions{
     display:flex;
     gap:12px;
+    align-items:center;
     justify-content:center;
     width:100%;
   }
 
   .view-details{
     background:transparent;
-    border:1px solid var(--gold);
+    border:1px solid var(--gold); /* reduced thickness */
     color:#fff;
     padding:10px 16px;
     border-radius:12px;
     font-weight:700;
+    cursor:pointer;
+    transition: background .18s, transform .18s, box-shadow .18s;
+    min-width:110px;
     white-space:nowrap;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .view-details:hover{
+    background:rgba(255,255,255,0.03);
+    transform:translateY(-3px);
+    box-shadow:0 6px 18px rgba(0,0,0,0.4);
   }
 
   .btn{
@@ -247,22 +252,32 @@
     padding:12px 18px;
     border-radius:12px;
     font-weight:800;
+    text-decoration:none;
+    box-shadow:0 10px 28px rgba(255,115,0,0.18);
     white-space:nowrap;
     cursor:pointer;
     border:0;
     min-width:140px;
-    position:relative;
+    transition:transform .18s, box-shadow .18s, opacity .18s;
+    font-family:"Times New Roman", Times, serif;
   }
 
-  .btn.pulse{ animation: btnPulse 2.2s infinite; }
-  @keyframes btnPulse{ 0%{transform:scale(1);}50%{transform:scale(1.03);}100%{transform:scale(1);} }
+  @keyframes btnPulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.03);}
+    100%{transform:scale(1);}
+  }
 
-  .btn.loading::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background: rgba(255,255,255,0.28);
-    border-radius:12px;
+  .btn.pulse{
+    animation:btnPulse 2.2s ease-in-out infinite;
+  }
+
+  .btn.loading{
+    background:rgba(255,255,255,0.12);
+    color:white; /* changed to white */
+    opacity:0.45; /* fades stronger */
+    box-shadow:none;
+    pointer-events:none;
   }
 
   .loader{
@@ -274,9 +289,10 @@
     animation:spin 0.9s linear infinite;
   }
 
-  @keyframes spin{ to{ transform:rotate(360deg);} }
+  @keyframes spin{to{transform:rotate(360deg);}}
 
-  /* MODAL SECTION */
+
+  /* Modal */
   .modal-bg{
     position:fixed;
     inset:0;
@@ -291,52 +307,40 @@
 
   .modal{
     width:100%;
-    max-width:900px;
+    max-width:880px;
     background:linear-gradient(135deg, rgba(122,0,0,0.98), rgba(179,24,0,0.96));
+    color:#fff;
     border-radius:14px;
-    padding:18px;
+    padding:16px;
+    box-shadow:0 18px 60px rgba(0,0,0,0.6);
     position:relative;
   }
 
-  .close{
+  .modal .close{
     position:absolute;
-    right:14px;
+    right:14px; 
     top:8px;
-    font-size:34px;
+    font-size:30px;
+    cursor:pointer;
+    color:rgba(255,255,255,0.95);
     background:rgba(255,255,255,0.02);
     padding:6px 10px;
     border-radius:10px;
-    cursor:pointer;
   }
 
-  /* RESTORED OPTION A MODAL IMAGE BOX */
-  .modal-image-box{
+  .modal-img{
     width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:14px;
-    border-radius:12px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.03));
-    box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 8px 26px rgba(255,255,255,0.02) inset;
-    border:1px solid rgba(255,255,255,0.03);
-    margin-bottom:12px;
-  }
-
-  .modal-image-box img{
-    width:auto;
-    max-width:100%;
-    height:auto;
-    max-height:260px; /* same as thumbnail */
-    object-fit:contain;
-    display:block;
-    border-radius:8px;
+    height:460px; /* increased for visibility */
+    object-fit:cover;
+    border-radius:10px;
   }
 
   .modal-title{
-    font-size:18px;
+    margin:12px 0 6px 0;
+    color:var(--white-faded);
+    font-size:20px;
+    font-weight:700;
     font-family:"Times New Roman", Times, serif;
-    margin-bottom:8px;
   }
 
   .modal-benefits{
@@ -344,20 +348,15 @@
     padding:14px;
     border-radius:10px;
     font-size:16px;
+    color:white;
     margin-bottom:12px;
-  }
-
-  .modal .register{
-    display:block;
-    margin:6px auto 0 auto;
-    padding:14px 28px;
   }
 
   footer{
     text-align:center;
-    color:rgba(255,255,255,0.35);
-    font-size:14px;
-    padding:16px 0 6px;
+    color:rgba(255,255,255,0.35); /* lightened */
+    font-size:14px; /* increased */
+    padding:22px 0 10px; /* moved up a bit */
   }
 </style>
 </head>
@@ -365,7 +364,7 @@
 <body>
 
 <header>
-  <div class="logo-box"><img src="Logo.jpg" alt="FORTUNE-X logo"></div>
+  <div class="logo-box"><img src="Logo.jpg"></div>
   <h1 class="site-title">FORTUNE-X REGISTRATION</h1>
 </header>
 
@@ -375,70 +374,50 @@
     <div class="subtitle-box">
       <h1>Select your preferred package to complete your registration:</h1>
     </div>
-    <p>Pick a package to get started and start earning non-stop everyday; <span style="text-transform:uppercase;font-weight:700">RUSH NOW!</span></p>
+    <p><b>Pick a package to get started and start earning non-stop everyday; RUSH NOW!</b></p>
   </section>
 
   <section class="grid">
 
-    <!-- STARTER PACKAGE -->
     <article class="package-box">
-
-      <div class="image-box">
-        <img src="Starter thumb.jpg">
-      </div>
-
+      <img class="thumb" src="Starter thumb.jpg">
       <div class="package-content">
         <h3 class="pkg-title">FORTUNE-X STARTER PACKAGE</h3>
         <div class="pkg-price"><span class="price-bullet"></span>₦7,500</div>
         <div class="card-notes">• up to ₦8,000 daily earnings<br>
           • Minimum withdrawal ₦15,000<br>
           • 6-month subscription</div>
-
         <div class="actions">
           <button class="view-details" onclick="openModal('starter')">VIEW DETAILS</button>
           <a class="btn pulse" data-href="https://paystack.shop/pay/Starterpackage1">REGISTER NOW</a>
         </div>
       </div>
-
     </article>
 
-    <!-- PLUS PACKAGE -->
     <article class="package-box">
-
-      <div class="image-box">
-        <img src="Plus thumb.jpg">
-      </div>
-
+      <img class="thumb" src="Plus thumb.jpg">
       <div class="package-content">
         <h3 class="pkg-title">FORTUNE-X PLUS PACKAGE</h3>
         <div class="pkg-price"><span class="price-bullet"></span>₦14,500</div>
         <div class="card-notes">• Up to ₦18,000 daily earnings<br>
           • No withdrawal limit<br>
           • 12-month subscription</div>
-
         <div class="actions">
           <button class="view-details" onclick="openModal('plus')">VIEW DETAILS</button>
           <a class="btn pulse" data-href="https://paystack.shop/pay/pluspackage1">REGISTER NOW</a>
         </div>
       </div>
-
     </article>
 
   </section>
 
 </main>
 
-<!-- STARTER MODAL -->
-<div id="starterModal" class="modal-bg" onclick="bgClose(event,'starter')">
+<div id="starterModal" class="modal-bg">
   <div class="modal">
     <div class="close" onclick="closeModal('starter')">×</div>
-
-    <div class="modal-image-box">
-      <img src="General 1.jpg">
-    </div>
-
+    <img src="General 1.jpg" class="modal-img">
     <div class="modal-title">FORTUNE-X Starter Package</div>
-
     <div class="modal-benefits">
       💎 ₦6000 instant reward claim<br>
       💎 Casino games reward $50<br>
@@ -448,22 +427,15 @@
       💎 Limited FortuneX box<br>
       💎 Subscription valid for 6 months
     </div>
-
     <a class="btn pulse register" data-href="https://paystack.shop/pay/Starterpackage1">REGISTER NOW</a>
   </div>
 </div>
 
-<!-- PLUS MODAL -->
-<div id="plusModal" class="modal-bg" onclick="bgClose(event,'plus')">
+<div id="plusModal" class="modal-bg">
   <div class="modal">
     <div class="close" onclick="closeModal('plus')">×</div>
-
-    <div class="modal-image-box">
-      <img src="General 2.jpg">
-    </div>
-
+    <img src="General 2.jpg" class="modal-img">
     <div class="modal-title">FORTUNE-X Plus Package</div>
-
     <div class="modal-benefits">
       💎 ₦12,000 instant reward claim<br>
       💎 Online and offline reviewing access<br>
@@ -474,7 +446,6 @@
       💎 Unlimited FortuneX box<br>
       💎 Subscription valid for 12 months
     </div>
-
     <a class="btn pulse register" data-href="https://paystack.shop/pay/pluspackage1">REGISTER NOW</a>
   </div>
 </div>
@@ -482,39 +453,27 @@
 <footer>fortune-xnetwork©2025.</footer>
 
 <script>
-  function openModal(key){
-    document.getElementById(key+"Modal").style.display="flex";
-    document.body.style.overflow="hidden";
-  }
-  function closeModal(key){
-    document.getElementById(key+"Modal").style.display="none";
-    document.body.style.overflow="";
-  }
-  function bgClose(e,key){
-    if(e.target.classList.contains("modal-bg")){
-      closeModal(key);
-    }
-  }
+function openModal(key){
+  document.getElementById(key+"Modal").style.display="flex";
+  document.body.style.overflow="hidden";
+}
 
-  /* REGISTER BUTTON LOADING EFFECT */
-  function makeRegisterHandlers(){
-    document.querySelectorAll(".btn, .register").forEach(btn=>{
-      if(btn._done) return;
-      btn._done = true;
-      btn.addEventListener("click",e=>{
-        e.preventDefault();
-        if(btn.classList.contains("loading")) return;
+function closeModal(key){
+  document.getElementById(key+"Modal").style.display="none";
+  document.body.style.overflow="";
+}
 
-        btn.classList.remove("pulse");
-        btn.classList.add("loading");
-        btn.innerHTML = 'PLEASE WAIT <span class="loader"></span>';
-
-        setTimeout(()=> window.location.href = btn.dataset.href, 6000);
-      });
-    });
-  }
-  document.addEventListener("DOMContentLoaded", makeRegisterHandlers);
+document.querySelectorAll(".btn, .register").forEach(btn=>{
+  btn.addEventListener("click",e=>{
+    e.preventDefault();
+    if(btn.classList.contains("loading")) return;
+    btn.classList.remove("pulse");
+    btn.classList.add("loading");
+    btn.innerHTML='PLEASE WAIT <span class="loader"></span>';
+    const link=btn.getAttribute("data-href");
+    setTimeout(()=>{window.location.href=link;},6000);
+  });
+});
 </script>
-
 </body>
-  </html>
+</html>
