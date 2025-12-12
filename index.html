@@ -441,7 +441,7 @@
 
 </main>
 
-<div id="starterModal" class="modal-bg">
+<div id="starterModal" class="modal-bg" onclick="bgClose(event,'starter')">
   <div class="modal">
     <div class="close" onclick="closeModal('starter')">×</div>
     <img src="General 1.jpg" class="modal-img">
@@ -459,7 +459,7 @@
   </div>
 </div>
 
-<div id="plusModal" class="modal-bg">
+<div id="plusModal" class="modal-bg" onclick="bgClose(event,'plus')">
   <div class="modal">
     <div class="close" onclick="closeModal('plus')">×</div>
     <img src="General 2.jpg" class="modal-img">
@@ -482,14 +482,24 @@
 
 <script>
 function openModal(key){
-  document.getElementById(key+"Modal").style.display="flex";
-  document.body.style.overflow="hidden";
+    const el = document.getElementById(key + "Modal");
+    if(!el) return;
+    el.style.display = "flex";
+    document.body.style.overflow = "hidden";
 }
 
 function closeModal(key){
-  document.getElementById(key+"Modal").style.display="none";
-  document.body.style.overflow="";
+    const el = document.getElementById(key + "Modal");
+    if(!el) return;
+    el.style.display = "none";
+    document.body.style.overflow = "";
 }
+
+function bgClose(e, key){
+    if(e.target.classList.contains("modal-bg")){
+        closeModal(key);
+    }
+  }
 
 document.querySelectorAll(".btn, .register").forEach(btn=>{
   btn.addEventListener("click",e=>{
