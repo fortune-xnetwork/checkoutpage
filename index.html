@@ -12,7 +12,7 @@
     --bg-end: #b30000;   /* bottom-right */
     --cream: #ffe9c6;
     --gold: rgba(255,215,0,0.95);
-    --gold-faded: rgba(255,215,0,0.16);
+    --gold-faded: rgba(255,215,0,0.14);
     --white-faded: rgba(255,255,255,0.88);
     --muted-white: rgba(255,255,255,0.7);
     --card-shadow: 0 10px 28px rgba(0,0,0,0.42);
@@ -38,7 +38,7 @@
     gap:12px;
   }
 
-  /* very rounded logo box, smaller size */
+  /* very rounded logo box, smaller size, thinner gold faded border */
   .logo-box{
     width:86px;
     height:86px;
@@ -49,7 +49,7 @@
     justify-content:center;
     background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
     box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-    border: 1px solid rgba(255,255,255,0.04);
+    border: 1px solid var(--gold-faded); /* thinner gold faded border */
   }
 
   .logo-box img{
@@ -76,6 +76,9 @@
     max-width:1100px;
     margin: 0 auto;
     padding: 18px 20px 36px;
+    display:flex;
+    flex-direction:column;
+    align-items:center; /* center everything */
   }
 
   /* Hero / subtitle area centered with faded dark box */
@@ -86,6 +89,7 @@
     flex-direction:column;
     gap:12px;
     margin-bottom:18px;
+    width:100%;
   }
 
   .subtitle-box{
@@ -116,24 +120,30 @@
     max-width:760px;
   }
 
-  /* Package grid */
+  /* Package grid - center contents */
   .grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    display:flex;
+    flex-wrap:wrap;
     gap:22px;
+    justify-content:center; /* center packages in the page */
+    width:100%;
   }
 
+  /* Package card: vertical layout (thumbnail on top) */
   .package-box{
     display:flex;
-    align-items:flex-start;
-    gap:16px;
+    flex-direction:column; /* vertical */
+    align-items:center;
+    gap:12px;
     background: var(--deep-red); /* plain deep red */
     border-radius:16px;
     padding:18px;
     border: 1px solid var(--gold-faded); /* soft gold faded outline */
     box-shadow: var(--card-shadow);
     transition: transform .26s cubic-bezier(.2,.9,.3,1), box-shadow .26s;
-    min-height:220px; /* increased vertical size */
+    min-height:320px; /* increased vertical size to fit content */
+    width:320px; /* fixed width so boxes align and remain centered */
+    box-sizing:border-box;
   }
 
   /* soft gold glow on hover (subtle) */
@@ -142,11 +152,10 @@
     box-shadow: 0 16px 40px rgba(179,56,0,0.42), 0 0 36px rgba(255,215,0,0.10);
   }
 
-  /* thumbnail taller than it is wide */
+  /* thumbnail larger, at top, taller than wide */
   .thumb{
-    width:112px;
-    height:160px; /* length longer than width */
-    flex-shrink:0;
+    width:88%;
+    height:180px; /* taller image so content is visible */
     border-radius:12px;
     object-fit:cover;
     background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.06));
@@ -155,10 +164,12 @@
   }
 
   .package-content{
-    flex:1;
+    width:100%;
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:8px;
+    align-items:center;
+    text-align:center;
   }
 
   .pkg-title{
@@ -170,47 +181,65 @@
     white-space:nowrap; /* one line, no breaking */
     overflow:hidden;
     text-overflow:ellipsis;
+    width:94%;
   }
 
   .pkg-price{
     color:#fff;
-    font-weight:800;
-    font-size:20px; /* increased price size */
+    font-weight:900;
+    font-size:22px; /* increased price size */
     margin-top:4px;
     white-space:nowrap;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    justify-content:center;
+  }
+
+  /* small modern bullet before price */
+  .price-bullet{
+    width:8px;
+    height:8px;
+    background:var(--gold);
+    border-radius:50%;
+    box-shadow: 0 4px 10px rgba(255,170,0,0.12);
+    flex-shrink:0;
   }
 
   /* notes slightly larger and faded white */
   .card-notes{
     margin-top:6px;
-    font-size:13px;
-    color: rgba(255,255,255,0.82);
-    opacity:0.92;
+    font-size:14px;
+    color: rgba(255,255,255,0.90);
+    opacity:0.95;
+    width:92%;
   }
 
   .actions{
     display:flex;
     gap:12px;
     align-items:center;
-    margin-top:auto; /* push actions to bottom of the card */
+    margin-top:6px; /* keep actions near bottom */
+    justify-content:center;
+    width:100%;
   }
 
-  /* VIEW DETAILS button (faded thicker outline) */
+  /* VIEW DETAILS button (faded lighter outline) */
   .view-details{
     background: transparent;
-    border: 2px solid rgba(255,255,255,0.10); /* thicker faded outline */
+    border: 1px solid rgba(255,255,255,0.06); /* lighter thinner faded outline */
     color: #fff;
-    padding:10px 18px;
+    padding:10px 16px;
     border-radius:12px;
     font-weight:700;
     cursor:pointer;
     transition: background .18s, transform .18s, box-shadow .18s;
-    min-width:128px;
+    min-width:110px;
     white-space:nowrap;
   }
   .view-details:hover{ background: rgba(255,255,255,0.03); transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
 
-  /* REGISTER NOW primary button - larger and full visible */
+  /* REGISTER NOW primary button - moderate width, pulse */
   .btn{
     display:inline-flex;
     align-items:center;
@@ -218,7 +247,7 @@
     gap:10px;
     background: linear-gradient(135deg,#ffaf3a,#ff7300);
     color:#050505;
-    padding:12px 22px;
+    padding:12px 18px;
     border-radius:12px;
     font-weight:800;
     text-decoration:none;
@@ -226,7 +255,7 @@
     transition: transform .18s ease, box-shadow .18s ease;
     cursor:pointer;
     border:0;
-    min-width:160px; /* increased length so text stays in one line */
+    min-width:140px; /* reduced width so buttons are not too wide */
     white-space:nowrap;
   }
   .btn:active{ transform: scale(.98); }
@@ -241,7 +270,7 @@
     animation: btnPulse 2.2s ease-in-out infinite;
   }
 
-  /* loading (please wait) state */
+  /* loading (please wait) state: make loader visible on dark modal (white loader) */
   .btn.loading {
     background: linear-gradient(90deg, rgba(196,182,158,0.12), rgba(200,180,130,0.10));
     color: rgba(25,20,18,0.92);
@@ -249,13 +278,13 @@
     pointer-events: none;
   }
 
-  /* loader circle */
+  /* loader circle (default white for visibility on dark) */
   .loader {
     width:16px;
     height:16px;
     border-radius:50%;
-    border:2px solid rgba(0,0,0,0.12);
-    border-top-color: rgba(0,0,0,0.32);
+    border:2px solid rgba(255,255,255,0.25);
+    border-top-color: #ffffff;
     animation: spin 0.9s linear infinite;
     display:inline-block;
   }
@@ -273,14 +302,14 @@
     padding:20px;
   }
 
-  /* modal now deep red/orange blend */
+  /* modal now deep red/orange blend, increased width/length */
   .modal{
     width:100%;
-    max-width:620px;
+    max-width:820px; /* increased length */
     background: linear-gradient(135deg, rgba(122,0,0,0.98) 0%, rgba(179,24,0,0.96) 100%);
     color: #fff; /* text reversed to white for contrast */
     border-radius:14px;
-    padding:14px;
+    padding:16px;
     box-shadow: 0 18px 60px rgba(0,0,0,0.6);
     transform-origin:center;
     animation: modalPop .28s cubic-bezier(.2,.9,.3,1);
@@ -289,13 +318,14 @@
   }
 
   .modal .close{
-    position:absolute; right:14px; top:10px; font-size:22px; cursor:pointer; color:rgba(255,255,255,0.9);
-    background: rgba(255,255,255,0.02); border-radius:8px; padding:4px 8px;
+    position:absolute; right:14px; top:8px; font-size:26px; cursor:pointer; color:rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.02); border-radius:10px; padding:6px 10px;
+    line-height:1;
   }
 
   .modal-img{
     width:100%;
-    height:260px;
+    height:360px; /* increased image height so content is visible */
     object-fit:cover;
     border-radius:10px;
     display:block;
@@ -307,18 +337,25 @@
     margin:12px 0 6px 0;
     color:var(--white-faded);
     font-weight:800;
-    font-size:20px;
+    font-size:22px;
+    text-align:left;
   }
 
   .modal-benefits{
     background: rgba(255,255,255,0.06);
-    padding:12px;
+    padding:14px;
     border-radius:10px;
-    color: rgba(255,255,255,0.95);
-    font-size:14px;
+    color: rgba(255,255,255,0.98);
+    font-size:15px; /* increased benefits size */
     line-height:1.45;
-    opacity:0.95;
+    opacity:0.98;
     margin-bottom:12px;
+  }
+
+  /* when registering, lighten the faded box for feedback */
+  .modal.registering .modal-benefits{
+    background: rgba(255,255,255,0.12);
+    color:#000; /* switch to dark text for contrast when lightened */
   }
 
   .modal .register{
@@ -327,15 +364,18 @@
     justify-content:center;
     gap:10px;
     text-decoration:none;
-    padding:12px 18px;
+    padding:14px 22px;
     border-radius:12px;
-    font-weight:800;
+    font-weight:900;
     color:#050505;
     background: linear-gradient(135deg,#ffaf3a,#ff7300);
     box-shadow: 0 12px 30px rgba(255,115,0,0.18);
     cursor:pointer;
     border:0;
     white-space:nowrap;
+    font-size:16px;
+    margin:0 auto; /* center it */
+    display:block; width:fit-content;
   }
 
   @keyframes modalPop{
@@ -345,10 +385,12 @@
 
   /* Responsive tweaks */
   @media (max-width:520px){
-    .thumb{ width:92px; height:132px; }
+    .thumb{ width:92%; height:160px; }
     .site-title{ font-size:22px; white-space:normal; } /* allow wrap on very small screens */
-    .grid{ gap:16px; grid-template-columns: 1fr; }
-    .package-box{ min-height:200px; padding:14px; }
+    .grid{ gap:16px; }
+    .package-box{ min-height:300px; padding:14px; width:92%; max-width:420px; }
+    .modal{ max-width:96%; padding:12px; }
+    .modal-img{ height:220px; }
   }
 </style>
 </head>
@@ -364,23 +406,22 @@
 <main class="container">
   <section class="hero">
     <div class="subtitle-box">
-      <h1>Select your preferred package to continue</h1>
+      <h1>kindly Select your preferred package to complete your registration:</h1>
     </div>
     <p>Pick a package to get started and start earning non-stop everyday; RUSH NOW!.</p>
   </section>
 
   <section class="grid">
 
-    <!-- STARTER PACKAGE (card with taller thumbnail) -->
+    <!-- STARTER PACKAGE (vertical layout) -->
     <article class="package-box" id="starter-card" data-package="starter">
-      <!-- small thumbnail shown on the card -->
+      <!-- large thumbnail at top -->
       <img class="thumb" src="Starter thumb.jpg" alt="Starter thumbnail">
 
       <div class="package-content">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
-          <h3 class="pkg-title">FORTUNE-X STARTER PACKAGE</h3>
-          <div class="pkg-price">₦7,500</div>
-        </div>
+        <h3 class="pkg-title">FORTUNE-X STARTER PACKAGE</h3>
+
+        <div class="pkg-price"><span class="price-bullet" aria-hidden="true"></span>₦7,500</div>
 
         <div class="card-notes">
          • up to ₦8,000 daily earnings • Minimum withdrawal ₦15,000 • 6-month subscription
@@ -388,22 +429,20 @@
 
         <div class="actions">
           <button class="view-details" onclick="openModal('starter')">VIEW DETAILS</button>
-          <!-- register button now handled by JS for same-tab redirect and loading animation -->
+          <!-- register button handled by JS for same-tab redirect and loading animation -->
           <a class="btn pulse" data-href="https://paystack.shop/pay/Starterpackage1" href="https://paystack.shop/pay/Starterpackage1">REGISTER NOW</a>
         </div>
       </div>
     </article>
 
-    <!-- PLUS PACKAGE (card with taller thumbnail) -->
+    <!-- PLUS PACKAGE (vertical layout) -->
     <article class="package-box" id="plus-card" data-package="plus">
-      <!-- Replace plus-thumb.jpg with your small image file -->
       <img class="thumb" src="Plus thumb.jpg" alt="Plus thumbnail">
 
       <div class="package-content">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
-          <h3 class="pkg-title">FORTUNE-X PLUS PACKAGE</h3>
-          <div class="pkg-price">₦14,500</div>
-        </div>
+        <h3 class="pkg-title">FORTUNE-X PLUS PACKAGE</h3>
+
+        <div class="pkg-price"><span class="price-bullet" aria-hidden="true"></span>₦14,500</div>
 
         <div class="card-notes">
           • Up to ₦18,000 daily earnings • No withdrawal limit• 12-month subscription
@@ -424,7 +463,7 @@
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="starterTitle">
     <div class="close" onclick="closeModal('starter')">×</div>
 
-    <!-- Replace starter.jpg with your large modal image -->
+    <!-- large modal image -->
     <img src="General 1.jpg" alt="Starter large" class="modal-img">
 
     <div id="starterTitle" class="modal-title">FORTUNE-X Starter Package</div>
@@ -448,7 +487,6 @@
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="plusTitle">
     <div class="close" onclick="closeModal('plus')">×</div>
 
-    <!-- Replace plus.jpg with your large modal image -->
     <img src="General 2.jpg" alt="Plus large" class="modal-img">
 
     <div id="plusTitle" class="modal-title">FORTUNE-X Plus Package</div>
@@ -487,6 +525,9 @@
     if(!el) return;
     el.style.display = 'none';
     document.body.style.overflow = '';
+    // remove registering class if present
+    const modalInner = el.querySelector('.modal');
+    if(modalInner) modalInner.classList.remove('registering');
   }
 
   // clicking on overlay outside modal closes it
@@ -524,6 +565,7 @@
    - pulse animation runs by default (class "pulse")
    - on click: stop pulse, set loading state (class "loading"), change inner text to "PLEASE WAIT" and show loader
    - after 6 seconds redirect to the button's data-href in the same tab
+   - For modal buttons: also add 'registering' class to the modal (lightens the faded box)
    - preserve original href attribute if JS disabled (progressive enhancement)
   */
   function makeRegisterHandlers(){
@@ -542,14 +584,19 @@
         // prevent default navigate
         e.preventDefault();
 
+        // if this button lives inside a modal, add registering class to that modal for visual feedback
+        const modalEl = el.closest('.modal');
+        if(modalEl){
+          modalEl.classList.add('registering');
+        }
+
         // stop pulse
         el.classList.remove('pulse');
 
         // populate loading UI
         el.classList.add('loading');
-        const originalContent = el.innerHTML;
-        // create loader + label
-        el.innerHTML = '<span style="font-weight:800;letter-spacing:0.6px;">PLEASE WAIT</span><span class="loader" aria-hidden="true"></span>';
+        // create loader + label (white loader is styled in CSS)
+        el.innerHTML = '<span style="font-weight:800;letter-spacing:0.6px;">PLEASE WAIT</span><span class="loader" aria-hidden="true" style="margin-left:10px;"></span>';
 
         // after 6 seconds redirect in same tab
         setTimeout(() => {
@@ -567,4 +614,4 @@
 
 </script>
 </body>
-   </html>
+  </html>
