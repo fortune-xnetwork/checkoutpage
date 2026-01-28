@@ -514,7 +514,7 @@ document.querySelectorAll(".btn, .register").forEach(btn=>{
     btn.classList.add("loading");
     btn.innerHTML='PLEASE WAIT <span class="loader"></span>';
     const link=btn.getAttribute("data-href");
-    setTimeout(()=>{window.location.href=register.html;},6000);
+    setTimeout(()=>{window.location.href=link;},6000);
   });
 });
 </script>
