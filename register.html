@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FortuneX | Secure Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+    
+    <style>
+    /* [Existing CSS from your code stays here] */
+body {
+margin: 0;
+padding: 0;
+background: radial-gradient(circle at center, #2b0000 0%, #120000 70%, #000000 100%);
+font-family: 'Inter', sans-serif;
+color: white;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+overflow-x: hidden;
+}
+
+.header-row{
+display: flex;
+align-items: center;
+justify-content: flex-start;
+gap: 14px;
+    margin-top: 40px;
+margin-bottom: 5px;
+}
+
+.logo-box{
+width:56px;
+height:56px;
+border-radius:18px;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+background: linear-gradient(135deg,#ffaf3a,#ff7300);
+box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+border:1px solid rgba(255,175,58,0.4);
+}
+
+.logo-box img{
+width:50px;
+height:50px;
+object-fit:cover;
+border-radius:12px;
+display:block;
+}
+
+.site-title{
+font-family:"Times New Roman", Times, serif;
+font-weight:800;
+color:#ffffff;
+font-size:19px;
+margin:0;
+letter-spacing:0.6px;
+white-space:nowrap;
+}
+
+.title-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.site-subtitle{
+    font-size:16px;
+    color:rgba(255,255,255,0.55);
+    margin-top:13px;     /* space from title */
+    margin-bottom:1px;
+    text-transform:none;
+}
+
+.register-container {
+width: 95%;
+max-width: 480px;
+margin: 30px auto 100px auto;
+background: rgba(255, 255, 255, 0.03);
+border: 1.5px solid rgba(255,175,58,0.35);
+backdrop-filter: blur(15px);
+border-radius: 24px;
+padding: 35px 25px;
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+position: relative;
+z-index: 10;
+}
+
+.main-title {
+font-size: 24px;
+font-weight: 900;
+color: white;
+text-align: center;
+margin-bottom: 15px;
+text-transform: uppercase;
+font-family: "Times New Roman", Times, serif;
+}
+
+.plan-selection-text {
+font-size: 17px;
+color: white;
+text-align: center;
+line-height: 1.5;
+margin-bottom: 30px;
+font-weight: 500;
+}
+
+.plan-name {
+font-size: 23px;
+font-weight: 900;
+color: #ffaf3a;
+display: block;
+margin-top: 5px;
+text-transform: uppercase;
+font-family: "Times New Roman", Times, serif;
+}
+
+.form-group {
+margin-bottom: 25px;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 8px;
+font-size: 16px;
+font-weight: 700;
+color: white;
+}
+
+.form-group input,
+.form-group select {
+width: 100%;
+padding: 15px 20px;
+border: 1.3px solid rgba(255,175,58,0.25);
+border-radius: 15px;
+background-color: #120000;
+color: white;
+font-size: 16px;
+box-sizing: border-box;
+transition: all 0.3s;
+appearance: none;
+}
+
+.form-group select {
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+background-repeat: no-repeat;
+background-position: right 18px center;
+background-size: 19px;
+padding-right: 48px;
+}
+
+.password-wrapper{
+position: relative;
+}
+
+.toggle-password{
+position: absolute;
+right: 18px;
+top: 67%;
+transform: translateY(-50%);
+color: #ffaf3a;
+font-size: 13px;
+cursor: pointer;
+}
+
+.action-button{
+gap: 10px;
+width: 100%;
+margin: 0 auto;
+padding: 9px 20px;
+background: linear-gradient(135deg,#ffaf3a,#ff7300);
+color: #1a0b00;
+border: none;
+border-radius: 15px;
+font-size: 18px;
+font-weight: 905;
+cursor: pointer;
+box-shadow: 0 6px 15px rgba(255,175,58,0.35);
+transition: all 0.3s;
+margin-top: 10px;
+text-transform: uppercase;
+font-family: "Times New Roman", Times, serif;
+animation: pulse 2s infinite;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.action-button.loading {
+    pointer-events: none;
+    background: linear-gradient(135deg, #ffaf3a, #ff7300);
+
+    width: 70%;
+    margin: 0 auto;
+
+    opacity: 0.40;
+    transform: scale(0.95);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* IMPORTANT: only cancel pulse WHEN loading */
+    transition: width 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+}
+
+.plan-button:hover { 
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 175, 58, 0.55);
+    animation-play-state: paused;
+}
+
+/* ===============================
+   PULSE ANIMATION (ONE TIME)
+   =============================== */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 175, 58, 0.6);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 14px rgba(255, 175, 58, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 175, 58, 0);
+    }
+}
+
+.action-button.loading span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.action-button .spinner {
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(0,0,0,0.3);
+    border-top: 3px solid black;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+to{ transform: rotate(360deg); }
+}
+
+.cancel-edit-btn{
+background: none;
+border: none;
+color: #ffaf3a;
+margin-top: 15px;
+padding: 10px 20px;
+cursor: pointer;
+font-size: 16px;
+width: 100%;
+text-align: center;
+padding-bottom: 4px;
+border-bottom: 1.5px dotted rgba(255,175,58,0.7);
+}
+
+#payment-summary{ display:none; }
+
+.summary-card{
+background: rgba(255,255,255,0.05);
+border-radius: 15px;
+padding: 25px;
+margin: 20px 0;
+border-left: 4px solid #ffaf3a;
+}
+
+.summary-item{
+display: flex;
+justify-content: space-between;
+margin-bottom: 12px;
+font-size: 14px;
+border-bottom: 1px solid rgba(255,255,255,0.05);
+padding-bottom: 8px;
+}
+
+.total-row{
+border-top: 1px solid rgba(255,255,255,0.1);
+margin-top: 15px;
+padding-top: 15px;
+display: flex;
+justify-content: space-between;
+font-size: 20px;
+font-weight: 900;
+color: #ffaf3a;
+}
+
+.live-activity-box{
+position: fixed;
+bottom: -100px;
+left: 50%;
+transform: translateX(-50%);
+width: 90%;
+max-width: 380px;
+background: rgba(60, 5, 5, 0.95);
+border: 2px solid rgba(255,175,58,0.45);
+border-radius: 19px;
+padding: 12px 15px;
+display: flex;
+align-items: center;
+gap: 12px;
+z-index: 1000;
+box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
+backdrop-filter: blur(10px);
+}
+
+.live-activity-box.active{ bottom:30px; }
+
+.activity-indicator{
+width:45px;
+height:45px;
+background: rgba(255,175,58,0.15);
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#ffaf3a;
+font-size:20px;
+flex-shrink:0;
+}
+
+.activity-title{
+font-size:13px;
+font-weight:800;
+color:#ffaf3a;
+text-transform:uppercase;
+font-family:"Times New Roman", Times, serif;
+}
+
+.activity-msg{ font-size:14px; color:##ffaf3a; }
+.activity-time{ font-size:11px; color:#666; }
+
+.footer{
+text-align:center;
+padding:25px 0;
+color:#444;
+font-size:12px;
+text-transform:uppercase;
+}
+    </style>
+</head>
+<body>
+
+<div class="header-row">
+  <div class="logo-box">
+    <img src="logo.png" alt="Logo">
+  </div>
+
+  <h1 class="site-title">FORTUNE-X ENROLLMENT</h1>
+</div>
+  </div>
+
+<div class="register-container">
+    <div id="registration-view">
+        <div class="main-title">Create Your Account</div>
+        <div class="plan-selection-text">You have selected: <span id="selected-plan-display" class="plan-name">Checking...</span>
+        <div class="site-subtitle">Kindly fill in your details below to continue:</div>
+       </div>
+        <form id="registration-form">
+            <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Choose a unique username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone-number">Phone Number</label>
+                <input type="tel" id="phone-number" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="form-group">
+    <label for="country">Country</label>
+    <select id="country" name="country" required>
+        <option value="" disabled selected hidden>Select Country</option>
+        <option value="Nigeria">Nigeria</option>
+        <option value="Ghana">Ghana</option>
+        <option value="South Africa">South Africa</option>
+        <option value="Kenya">Kenya</option>
+        <option value="Uganda">Uganda</option>
+        <option value="Cameroon">Cameroon</option>
+        <option value="Others">Others</option>
+    </select>
+            </div>
+
+            <div class="form-group password-wrapper">
+    <label for="password">Password</label>
+
+    <input type="password" id="password" placeholder="Create a strong password" required>
+
+    <i class="fa-solid fa-eye-slash toggle-password" onclick="togglePassword()"></i>
+</div>
+            
+            <button type="submit" class="action-button">
+    <span>PROCEED TO PAYMENT</span>
+</button>
+        </form>
+    </div>
+
+    <div id="payment-summary">
+        <div class="main-title">Activate Account</div>
+        <p style="text-align:center; color:#aaa; font-size:14px; margin-bottom:10px;">
+    Review your information before making payment to 
+    <span style="color:#ffaf3a; font-weight:900;">FORTUNE-X DIGITAL NETWORK</span>.
+</p>
+        
+        <div class="summary-card">
+            <div class="summary-item"><span>Subscriber:</span><span id="summary-name" style="font-weight:700"></span></div>
+            <div class="summary-item"><span>Username:</span><span id="summary-user" style="font-weight:700"></span></div>
+            <div class="summary-item"><span>Email:</span><span id="summary-email" style="font-weight:700"></span></div>
+            <div class="summary-item"><span>Country:</span><span id="summary-country" style="font-weight:700"></span></div>
+            <div class="summary-item"><span>Plan:</span><span id="summary-plan" style="color:#ffaf3a; font-weight:700"></span></div>
+            <div class="total-row"><span>Total Due:</span><span id="summary-total"></span></div>
+        </div>
+
+        <button id="final-pay-btn" class="action-button">Complete Payment Now</button>
+        <button onclick="location.reload()" class="cancel-edit-btn">
+    CANCEL & EDIT DETAILS
+</button>
+    </div>
+</div>
+
+<div class="footer">&copy; 2026 FORTUNE-X ECOSYSTEM</div>
+
+<div id="live-activity" class="live-activity-box">    
+    <div class="activity-indicator" id="activity-icon"><i class="fas fa-check-circle"></i></div>
+    
+    <div class="activity-details">
+        <div class="activity-title" id="activity-label"></div>
+        <div class="activity-msg" id="activity-desc">Someone just registered...</div>
+        <span class="activity-time" id="activity-time">5m ago</span>
+    </div>
+</div>
+
+
+<script>
+// FLUTTERWAVE CONFIG
+const FW_PUBLIC_KEY = 'FLWPUBK-64814261d97f6ca8f25c270262863bda-X';
+let userData = {};
+let amountToPay = 0;
+let displayPlan = "";
+
+// [Activity Data Script remains the same as yours...]
+const ACTIVITY_DATA = [
+        { name: "Olamide B.", type: "withdrawn", amount: "$90 (₦90,000)", loc: "Lagos", time: "2m ago", icon: "fa-wallet" },
+    { name: "Queen clara", type: "withdrawn", amount: "$130 (₦130,000)", loc: "Port harcourt", time: "10m ago", icon: "fa-wallet" },
+    { name: "Miracle C.", type: "activated", amount: "₦14,500", plan: "PLUS", loc: "Ghana", time: "2m ago", icon: "fa-bolt" },
+    { name: "Lizzy D.", type: "withdrawn", amount: "$180 (₦180,000)", loc: "Anambra", time: "30m ago", icon: "fa-wallet" },
+    { name: "Rose E..", type: "activated", amount:  "₦7,500", plan: "STARTER", loc: "Lagos", time: "2m ago", icon: "fa-bolt" },
+    { name: "Emeka U.", type: "activated", amount: "₦14,500", plan: "STARTER", loc: "Enugu", time: "just now", icon: "fa-bolt" },
+    { name: "Sarah J.", type: "activated", amount: "₦7,500", plan: "STARTER", loc: "Abuja", time: "5m ago", icon: "fa-check-double" },
+    { name: "Yusuf K.", type: "withdrawn", amount: "$24 (₦24,000)", loc: "Kano", time: "1m ago", icon: "fa-money-bill-transfer" },
+    { name: "Blessing W.", type: "activated", amount: "₦14,500", plan: "PLUS", loc: "Warri", time: "8m ago", icon: "fa-star" },
+    { name: "Tunde A.", type: "withdrawn", amount: "$56 (₦56,000)", loc: "Ibadan", time: "12m ago", icon: "fa-hand-holding-dollar" },
+    { name: "Chioma N.", type: "activated", amount: "₦14,500", plan: "PLUS", loc: "Port Harcourt", time: "3m ago", icon: "fa-shield-halved" },
+    { name: "Ibrahim D.", type: "withdrawn", amount: "$120 (₦120,000)", loc: "Kaduna", time: "15m ago", icon: "fa-money-check-dollar" },
+    { name: "Gloria S.", type: "activated", amount: "₦7,500", plan: "STARTER", loc: "Calabar", time: "6m ago", icon: "fa-circle-plus" },
+    { name: "David O.", type: "withdrawn", amount: "$36 (₦36,000)", loc: "Benin City", time: "4m ago", icon: "fa-vault" }
+];
+
+let currentActivityIndex = 0;
+function showNextActivity() {
+    const box = document.getElementById('live-activity');
+    const data = ACTIVITY_DATA[currentActivityIndex];
+
+    const planText = data.plan ? ` <span style="opacity:1">(${data.plan})</span>` : '';
+
+    // 🔥 CHANGE ICON HERE
+    document.getElementById('activity-icon').innerHTML =
+        `<i class="fas ${data.icon}"></i>`;
+
+    document.getElementById('activity-desc').innerHTML = 
+        `<strong>${data.name}</strong> from ${data.loc} just 
+        ${data.type === 'activated' ? 'activated' : 'withdrew'} 
+        <span style="color:#ffaf3a">${data.amount}${planText}</span>.`;
+
+    box.classList.add('active');
+
+    setTimeout(() => {
+        box.classList.remove('active');
+        currentActivityIndex = (currentActivityIndex + 1) % ACTIVITY_DATA.length;
+        setTimeout(showNextActivity, 3500);
+    }, 3000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(showNextActivity, 3000);
+
+    const storedPlan = (localStorage.getItem('selectedPlan') || "").toLowerCase();
+    if (storedPlan.includes("max") || storedPlan.includes("14500")) {
+        displayPlan = "Plus — ₦14,500";
+        amountToPay = 14500;
+    } else {
+        displayPlan = "Starter — ₦7,500";
+        amountToPay = 7500;
+    }
+    document.getElementById('selected-plan-display').textContent = displayPlan;
+
+    document.getElementById('registration-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const btn = this.querySelector('.action-button');
+
+    showPleaseWait(btn, () => {
+        userData = {
+            fullName: document.getElementById('full-name').value,
+            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone-number').value,
+            country: document.getElementById('country').value,
+            plan: displayPlan
+        };
+
+        document.getElementById('summary-name').textContent = userData.fullName;
+        document.getElementById('summary-user').textContent = "@" + userData.username;
+        document.getElementById('summary-email').textContent = userData.email;
+        document.getElementById('summary-country').textContent = userData.country;
+        document.getElementById('summary-plan').textContent = userData.plan;
+        document.getElementById('summary-total').textContent = "₦" + amountToPay.toLocaleString();
+
+        document.getElementById('registration-view').style.display = 'none';
+        document.getElementById('payment-summary').style.display = 'block';
+        window.scrollTo(0, 0);
+    });
+});
+        
+    document.getElementById('final-pay-btn').addEventListener('click', payWithFlutterwave);        
+});    
+
+// UPDATED PAYMENT FUNCTION FOR FLUTTERWAVE
+function payWithFlutterwave() {
+    FlutterwaveCheckout({
+        public_key: FW_PUBLIC_KEY,
+        tx_ref: "CEL-" + Date.now(),
+        amount: amountToPay,
+        currency: "NGN",
+        payment_options: "card, banktransfer, ussd",
+        customer: {
+            email: userData.email,
+            phone_number: userData.phone,
+            name: userData.fullName,
+        },
+        customizations: {
+            title: "PANDA MEDIA (Flutterwave merchant 105)",
+            description: "Activation for Fortune-X Ecosystem",
+            logo: "logo.png",
+        },
+        callback: function (data) {
+            const message = `🚀 *NEW FORTUNE-X ACTIVATION*%0A%0A` +
+                            `👤 *Name:* ${userData.fullName}%0A` +
+                            `🆔 *Username:* ${userData.username}%0A` +
+                            `📧 *Email:* ${userData.email}%0A` +
+                            `💎 *Plan:* ${userData.plan}%0A` +
+                            `💰 *Amount:* ₦${amountToPay}%0A` +
+                            `🧾 *Ref:* ${data.transaction_id}%0A%0A` +
+                            `✅ *Status:* PAID VIA FLUTTERWAVE`;
+            
+            window.location.href = `https://t.me/coachfavour01?text=Hello+Coach,+I+just+made+my+payment+for+a+Fortune-X+plan,+
+            Here+is+my+receipt,+Please+Confirm!`;
+        },
+        onclose: function() {
+            // Logic when user closes the modal
+        }
+    });
+}
+// PLEASE WAIT LOADING EFFECT (5–7 seconds)
+function showPleaseWait(button, callback) {
+    button.classList.add('loading');
+    button.innerHTML = `<span>PLEASE WAIT <div class="spinner"></div></span>`;
+
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            callback();
+        }, Math.floor(Math.random() * 2000) + 5000);
+    });
+}
+function togglePassword() {
+    const password = document.getElementById("password");
+    const icon = document.querySelector(".toggle-password");
+
+    if (password.type === "password") {
+        password.type = "text";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    } else {
+        password.type = "password";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    }
+}    
+</script>
+</body>
+</html>
