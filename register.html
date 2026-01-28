@@ -509,12 +509,18 @@ function showNextActivity() {
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(showNextActivity, 3000);
 
-    const storedPlan = localStorage.getItem("selectedPlan");
+    const storedPlan = (localStorage.getItem('selectedPlan') || "").toLowerCase();
 
-let displayPlan = "Starter Package";
-
-if (storedPlan === "plus") {
-    displayPlan = "Plus Package";
+if (storedPlan.includes("plus")) {
+    displayPlan = "Plus — ₦14,500";
+    amountToPay = 14500;
+} else if (storedPlan.includes("starter")) {
+    displayPlan = "Starter — ₦7,500";
+    amountToPay = 7500;
+} else {
+    // fallback (prevents wrong display)
+    displayPlan = "Starter — ₦7,500";
+    amountToPay = 7500;
 }
 
 document.getElementById("selected-plan-display").textContent = displayPlan;
