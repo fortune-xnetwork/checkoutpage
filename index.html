@@ -433,7 +433,8 @@
         <div class="actions">
           <button class="view-details" onclick="openModal('starter')">VIEW DETAILS</button>
           <a class="btn pulse"
-            onclick="this.classList.add('loading');localStorage.setItem('selectedPlan','starter');setTimeout(() => {window.location.assign('register.html');}, 6000);">REGISTER NOW</a>
+            onclick="this.classList.add('loading');
+          this.innerHTML = 'PLEASE WAIT <span class=spinner></span>';localStorage.setItem('selectedPlan','starter');setTimeout(() => {window.location.assign('register.html');}, 3000);">REGISTER NOW</a>
         </div>
       </div>
     </article>
@@ -450,6 +451,7 @@
           <button class="view-details" onclick="openModal('plus')">VIEW DETAILS</button>
           <a class="btn pulse"
 onclick="this.classList.add('loading');
+this.innerHTML = 'PLEASE WAIT <span class=spinner></span>';
 localStorage.setItem('selectedPlan','plus');setTimeout(() => {window.location.assign('register.html');}, 6000);">REGISTER NOW</a>
         </div>
       </div>
@@ -476,6 +478,7 @@ localStorage.setItem('selectedPlan','plus');setTimeout(() => {window.location.as
     </div>
     <a class="btn pulse register"
       onclick="this.classList.add('loading');
+this.innerHTML = 'PLEASE WAIT <span class=spinner></span>';
     localStorage.setItem('selectedPlan','starter');setTimeout(() => {window.location.assign('register.html');}, 6000);">REGISTER NOW</a>
   </div>
 </div>
@@ -497,11 +500,12 @@ localStorage.setItem('selectedPlan','plus');setTimeout(() => {window.location.as
     </div>
     <a class="btn pulse register"
       onclick="this.classList.add('loading');
+this.innerHTML = 'PLEASE WAIT <span class=spinner></span>';
    localStorage.setItem('selectedPlan','plus');setTimeout(() => {window.location.assign('register.html');}, 6000);">REGISTER NOW</a>
   </div>
 </div>
 
-<footer>fortuneXnetwork©2025.</footer>
+<footer>fortuneXnetwork©2026.</footer>
 
 <script>
 function openModal(key){
