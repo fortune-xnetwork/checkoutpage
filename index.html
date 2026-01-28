@@ -432,8 +432,8 @@
           • 6 months valid subscription.</div>
         <div class="actions">
           <button class="view-details" onclick="openModal('starter')">VIEW DETAILS</button>
-          <a class="btn pulse" data-href="register.html"
-            onclick="localStorage.setItem('selectedPlan','starter')">REGISTER NOW</a>
+          <a class="btn pulse"
+            onclick="localStorage.setItem('selectedPlan','starter'); window.location.href='register.html';">REGISTER NOW</a>
         </div>
       </div>
     </article>
@@ -448,8 +448,8 @@
           • 12 months valid subscription.</div>
         <div class="actions">
           <button class="view-details" onclick="openModal('plus')">VIEW DETAILS</button>
-          <a class="btn pulse" data-href="register.html"
-            onclick="localStorage.setItem('selectedPlan','plus')">REGISTER NOW</a>
+          <a class="btn pulse"
+            onclick="localStorage.setItem('selectedPlan','plus'); window.location.href='register.html';">REGISTER NOW</a>
         </div>
       </div>
     </article>
@@ -473,7 +473,8 @@
       💎 Limited FortuneX box.<br>
       💎 Subscription valid for 6 months.
     </div>
-    <a class="btn pulse register" data-href="register.html">REGISTER NOW</a>
+    <a class="btn pulse register"
+      onclick="localStorage.setItem('selectedPlan','starter'); window.location.href='register.html';">REGISTER NOW</a>
   </div>
 </div>
 
@@ -492,7 +493,8 @@
       💎 Unlimited FortuneX box.<br>
       💎 Subscription valid for 12 months.
     </div>
-    <a class="btn pulse register" data-href="register.html">REGISTER NOW</a>
+    <a class="btn pulse register"
+      onclick="localStorage.setItem('selectedPlan','plus'); window.location.href='register.html';">REGISTER NOW</a>
   </div>
 </div>
 
