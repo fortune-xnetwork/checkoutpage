@@ -511,10 +511,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const storedPlan = (localStorage.getItem('selectedPlan') || "").toLowerCase();
 
-if (storedPlan.includes("FORTUNE-X PLUS PACKAGE")) {
+if (storedPlan.includes("plus")) {
     displayPlan = "Plus — ₦14,500";
     amountToPay = 14500;
-} else if (storedPlan.includes("FORTUNE-X STARTER PACKAGE")) {
+} else if (storedPlan.includes("starter")) {
     displayPlan = "Starter — ₦7,500";
     amountToPay = 7500;
 } else {
