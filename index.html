@@ -433,7 +433,7 @@
         <div class="actions">
           <button class="view-details" onclick="openModal('starter')">VIEW DETAILS</button>
           <a class="btn pulse"
-            onclick="localStorage.setItem('selectedPlan','starter'); window.location.href='register.html';">REGISTER NOW</a>
+            onclick="this.classList.add('loading');localStorage.setItem('selectedPlan','starter');setTimeout(() => {window.location.assign('register.html');}, 6000);">REGISTER NOW</a>
         </div>
       </div>
     </article>
@@ -449,7 +449,8 @@
         <div class="actions">
           <button class="view-details" onclick="openModal('plus')">VIEW DETAILS</button>
           <a class="btn pulse"
-            onclick="localStorage.setItem('selectedPlan','plus'); window.location.href='register.html';">REGISTER NOW</a>
+onclick="this.classList.add('loading');
+localStorage.setItem('selectedPlan','plus');setTimeout(() => {window.location.assign('register.html');}, 6000);">REGISTER NOW</a>
         </div>
       </div>
     </article>
@@ -474,7 +475,8 @@
       💎 Subscription valid for 6 months.
     </div>
     <a class="btn pulse register"
-      onclick="localStorage.setItem('selectedPlan','starter'); window.location.href='register.html';">REGISTER NOW</a>
+      onclick="this.classList.add('loading');
+    localStorage.setItem('selectedPlan','starter');setTimeout(() => {window.location.assign('register.html');}, 6000);">REGISTER NOW</a>
   </div>
 </div>
 
@@ -494,7 +496,8 @@
       💎 Subscription valid for 12 months.
     </div>
     <a class="btn pulse register"
-      onclick="localStorage.setItem('selectedPlan','plus'); window.location.href='register.html';">REGISTER NOW</a>
+      onclick="this.classList.add('loading');
+   localStorage.setItem('selectedPlan','plus');setTimeout(() => {window.location.assign('register.html');}, 6000);">REGISTER NOW</a>
   </div>
 </div>
 
