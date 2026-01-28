@@ -421,7 +421,7 @@
           • 6 months valid subscription.</div>
         <div class="actions">
           <button class="view-details" onclick="openModal('starter')">VIEW DETAILS</button>
-          <a class="btn pulse" data-href="https://flutterwave.com/pay/fortune-xstarterpackage">REGISTER NOW</a>
+          <a class="btn pulse" data-href="register.html">REGISTER NOW</a>
         </div>
       </div>
     </article>
@@ -436,7 +436,7 @@
           • 12 months valid subscription.</div>
         <div class="actions">
           <button class="view-details" onclick="openModal('plus')">VIEW DETAILS</button>
-          <a class="btn pulse" data-href="https://flutterwave.com/pay/fortune-xpluspackage">REGISTER NOW</a>
+          <a class="btn pulse" data-href="register.html">REGISTER NOW</a>
         </div>
       </div>
     </article>
@@ -460,7 +460,7 @@
       💎 Limited FortuneX box.<br>
       💎 Subscription valid for 6 months.
     </div>
-    <a class="btn pulse register" data-href="https://flutterwave.com/pay/fortune-xstarterpackage">REGISTER NOW</a>
+    <a class="btn pulse register" data-href="register.html">REGISTER NOW</a>
   </div>
 </div>
 
@@ -479,7 +479,7 @@
       💎 Unlimited FortuneX box.<br>
       💎 Subscription valid for 12 months.
     </div>
-    <a class="btn pulse register" data-href="https://flutterwave.com/pay/fortune-xpluspackage">REGISTER NOW</a>
+    <a class="btn pulse register" data-href="register.html">REGISTER NOW</a>
   </div>
 </div>
 
@@ -514,7 +514,7 @@ document.querySelectorAll(".btn, .register").forEach(btn=>{
     btn.classList.add("loading");
     btn.innerHTML='PLEASE WAIT <span class="loader"></span>';
     const link=btn.getAttribute("data-href");
-    setTimeout(()=>{window.location.href=link;},6000);
+    setTimeout(()=>{window.location.href=register.html;},6000);
   });
 });
 </script>
