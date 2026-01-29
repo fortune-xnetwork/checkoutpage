@@ -574,17 +574,17 @@ function payWithFlutterwave() {
             logo: "logo.png",
         },
         callback: function (data) {
-            const message = `🚀 *NEW FORTUNE-X ACTIVATION*%0A%0A` +
-                            `👤 *Name:* ${userData.fullName}%0A` +
-                            `🆔 *Username:* ${userData.username}%0A` +
-                            `📧 *Email:* ${userData.email}%0A` +
-                            `💎 *Plan:* ${userData.plan}%0A` +
-                            `💰 *Amount:* ₦${amountToPay}%0A` +
-                            `🧾 *Ref:* ${data.transaction_id}%0A%0A` +
-                            `✅ *Status:* PAID VIA FLUTTERWAVE`;
+            const message = `🚀 Hello Coach, I have made my payment for Fortune-X activation, Here are my details:%0A%0A` +
+                            `👤 Name: ${userData.fullName}%0A` +
+                            `🆔 Username: ${userData.username}%0A` +
+                            `📧 Email: ${userData.email}%0A` +
+                            `💎 Plan: ${userData.plan}%0A` +
+                            `💰 Amount: ₦${amountToPay}%0A` +
+                            `🧾 Ref: ${data.transaction_id}%0A%0A` +
+                            
+                            `✅ Status: PAID VIA FLUTTERWAVE`;
             
-            window.location.href = `https://t.me/coachfavour01?text=Hello+Coach,+I+just+made+my+payment+for+a+Fortune-X+plan,+
-            Here+is+my+receipt,+Please+Confirm!`;
+            window.location.href = `https://t.me/coachfavour01?text=${message}`;
         },
         onclose: function() {
             // Logic when user closes the modal
